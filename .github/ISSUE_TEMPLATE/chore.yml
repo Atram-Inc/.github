@@ -1,0 +1,70 @@
+name: Chore / Infrastructure
+description: CI/CD, tooling, dependency updates, config changes, DevOps
+labels: ["Improvement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Chore / Infrastructure Request
+        Use this for tooling, CI/CD, dependency updates, config changes, or DevOps work. Use the [AI Prompt](https://linear.app/atram/document/engineering-ticket-templates-agent-ready-standard-ed4030f0e9e7) to help you complete any fields you're unsure about.
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What's needed?
+      description: Describe the task. What should change and why?
+      placeholder: "We need to update the Node.js version in our GitHub Actions workflows from 18 to 20 because 18 reaches EOL next month."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - CI/CD (GitHub Actions)
+        - Infrastructure / Hosting
+        - Tooling / Developer Experience
+        - Config / Environment
+        - Dependencies
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: repo
+    attributes:
+      label: Repo
+      description: Which repo is this for? Leave blank if it applies to all.
+      placeholder: "Atram-Inc/rada-weather or all repos"
+
+  - type: textarea
+    id: done-when
+    attributes:
+      label: Done when
+      description: How will you know this is complete? List specific outcomes.
+      placeholder: |
+        - [ ] All GitHub Actions workflows use Node 20
+        - [ ] CI passes on all active repos
+        - [ ] Application behavior is unchanged
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - Urgent — security risk or system down
+        - High — blocking development
+        - Medium — should be done soon
+        - Low — when there's time
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else?
+      description: Related tickets, deadlines, links, extra context.

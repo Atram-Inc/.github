@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: AI Prompt for Writing Tickets
+    url: https://linear.app/atram/document/engineering-ticket-templates-agent-ready-standard-ed4030f0e9e7
+    about: Use this AI prompt to help you fill out any template — paste it into Claude or ChatGPT along with your template.

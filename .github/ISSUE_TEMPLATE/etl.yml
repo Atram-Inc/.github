@@ -1,0 +1,114 @@
+name: ETL / Data Pipeline
+description: Weather data, forecast processing, data ingestion, exports, Supabase data jobs
+labels: ["Feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## ETL / Data Pipeline Request
+        Use this for anything involving weather data, forecast processing, data ingestion, Google Sheets exports, or Supabase data jobs. Use the [AI Prompt](https://linear.app/atram/document/engineering-ticket-templates-agent-ready-standard-ed4030f0e9e7) to help you complete any fields you're unsure about.
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: What data needs to be processed? From where to where? Why?
+      placeholder: "We need to pull daily flood forecast data from Google Flood Hub API and store it in Supabase so the Alert Manager can use it for riverine alerts in Kenya."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: source-type
+    attributes:
+      label: Data Source
+      description: Where does the data come from?
+      options:
+        - External API
+        - Google Sheets / Spreadsheet
+        - Supabase (internal)
+        - Manual upload / CSV
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: source-details
+    attributes:
+      label: Data Source Details
+      description: API endpoint, spreadsheet link, or description of the data. Include a sample if possible.
+      placeholder: |
+        API: Google Flood Hub Forecasting API
+        Docs: https://developers.google.com/flood-hub
+        Sample response: { "gaugeId": "...", "forecastDate": "...", "dischargeM3s": 42.5 }
+    validations:
+      required: true
+
+  - type: textarea
+    id: destination
+    attributes:
+      label: Data Destination
+      description: Where should the data end up? What should it look like?
+      placeholder: |
+        Supabase table: flood_forecasts
+        Columns: gauge_id, forecast_date, discharge_m3s, severity, created_at
+    validations:
+      required: true
+
+  - type: textarea
+    id: processing
+    attributes:
+      label: Processing Rules
+      description: Any transformations, filtering, aggregation, or validation needed?
+      placeholder: "Convert discharge values to severity levels using Kenya thresholds. Skip forecasts older than 7 days. Deduplicate by gauge_id + forecast_date."
+
+  - type: dropdown
+    id: schedule
+    attributes:
+      label: How often should it run?
+      options:
+        - Once (one-time job)
+        - On demand
+        - Every 6 hours
+        - Daily
+        - Weekly
+        - Custom (describe in context)
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: How will you know this is working?
+      placeholder: |
+        - [ ] Data arrives in the correct Supabase table with expected format
+        - [ ] Duplicate runs don't create duplicate data
+        - [ ] Errors are logged and visible
+        - [ ] Pipeline runs on the specified schedule
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - Urgent — blocking alerts or partner work
+        - High — needed for upcoming launch
+        - Medium — important but flexible
+        - Low — nice to have
+    validations:
+      required: true
+
+  - type: input
+    id: deadline
+    attributes:
+      label: Needed by
+      description: Hard deadline? Partner commitment? Or flexible?
+      placeholder: "Before Kenya pilot launch"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else?
+      description: Access credentials needed, partner contacts, related tickets, data quirks.

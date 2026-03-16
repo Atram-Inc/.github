@@ -1,0 +1,127 @@
+name: Bug Report
+description: Report something that's broken or behaving unexpectedly
+labels: ["Bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug Report
+        Fill in as much as you can. Screenshots and error messages are very helpful. Use the [AI Prompt](https://linear.app/atram/document/engineering-ticket-templates-agent-ready-standard-ed4030f0e9e7) to help you complete any fields you're unsure about.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's broken?
+      description: Describe the problem. Include exact error messages if you see any.
+      placeholder: "When I try to create a new alert for Colombia, the page shows a spinner forever and never loads the forecast data."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: How can someone see this bug? Be specific.
+      placeholder: |
+        1. Go to MeteOps Console > Alerts
+        2. Click "New Alert" and select Colombia
+        3. Pick any 3 municipalities
+        4. Page shows loading spinner indefinitely — forecast data never appears
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should happen instead?
+      placeholder: "Forecast data should load within a few seconds and display rain predictions for the selected municipalities."
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / Error Messages
+      description: Drag and drop screenshots, paste error messages, or link to screen recordings.
+      placeholder: "Paste screenshots or error logs here"
+
+  - type: dropdown
+    id: who-affected
+    attributes:
+      label: Who is affected?
+      options:
+        - All users
+        - Specific region/country
+        - Internal team only
+        - Single user
+    validations:
+      required: true
+
+  - type: dropdown
+    id: frequency
+    attributes:
+      label: How often does it happen?
+      options:
+        - Every time
+        - Most of the time
+        - Sometimes / intermittent
+        - Happened once
+    validations:
+      required: true
+
+  - type: textarea
+    id: blocking
+    attributes:
+      label: What's blocked?
+      description: Is this preventing something important? A demo, a partner launch, daily operations?
+      placeholder: "Josh can't create alerts for Colombia — daily operations blocked."
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the system is affected?
+      multiple: true
+      options:
+        - Frontend
+        - Backend / Edge Functions
+        - ETL / Data Pipeline
+        - Messaging (WhatsApp/SMS)
+        - Database
+        - CI/CD / Infrastructure
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: repo
+    attributes:
+      label: Repo
+      description: Which repo is this in? Leave blank if unsure.
+      placeholder: "Atram-Inc/alert-manager"
+
+  - type: textarea
+    id: cause
+    attributes:
+      label: Likely cause
+      description: Do you have a theory about what's causing this? If not, just say "unknown."
+      placeholder: "unknown"
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - Urgent — system down or critical function broken
+        - High — major feature broken, workaround exists
+        - Medium — annoying but not blocking
+        - Low — cosmetic or minor
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else?
+      description: When did it start? Did anything change recently? Related tickets?

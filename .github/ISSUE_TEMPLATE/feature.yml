@@ -1,0 +1,124 @@
+name: Feature
+description: Request a new capability, integration, screen, or workflow
+labels: ["Feature"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## New Feature Request
+        Fill in as much as you can. Use the [AI Prompt](https://linear.app/atram/document/engineering-ticket-templates-agent-ready-standard-ed4030f0e9e7) to help you complete any fields you're unsure about.
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+      description: What are we building and why? 1-3 sentences.
+      placeholder: "We need to send follow-up SMS messages to users who received an alert but haven't opened the app, so we can re-engage them before the next weather event."
+    validations:
+      required: true
+
+  - type: input
+    id: who
+    attributes:
+      label: Who is it for?
+      description: End users? Josh on MeteOps? Internal team? A partner?
+      placeholder: "End users in Colombia who received a rain alert"
+    validations:
+      required: true
+
+  - type: textarea
+    id: how
+    attributes:
+      label: How it should work
+      description: Walk through the experience step by step — what the user does and what the system does.
+      placeholder: |
+        1. System detects users who received an alert but haven't opened the app
+        2. System sends a follow-up SMS with a magic link 24h after the alert
+        3. User taps the link and lands directly in the app
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the system does this touch?
+      multiple: true
+      options:
+        - Frontend
+        - Backend / Edge Functions
+        - ETL / Data Pipeline
+        - Messaging (WhatsApp/SMS)
+        - Database
+        - CI/CD / Infrastructure
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: repo
+    attributes:
+      label: Repo
+      description: Which repo is this for? Leave blank if unsure.
+      placeholder: "Atram-Inc/rada-message-system"
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope details
+      description: Any known tables, endpoints, or components involved. If unsure, say so — engineering will confirm.
+      placeholder: "Involves the alerts table and the WhatsApp messaging edge function. Not sure which specific files."
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: How will you know this is done? List specific, testable outcomes.
+      placeholder: |
+        - [ ] Users who haven't opened the app receive a follow-up SMS within 24h
+        - [ ] The SMS contains a working magic link
+        - [ ] Users who already opened the app do NOT receive the SMS
+        - [ ] Existing alert functionality is not broken
+    validations:
+      required: true
+
+  - type: textarea
+    id: edge-cases
+    attributes:
+      label: Edge Cases
+      description: Anything that could go wrong or needs special handling?
+      placeholder: |
+        - What if the user has no phone number on file?
+        - What if the alert event is still ongoing?
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups / References
+      description: Screenshots, Figma links, examples from other products. Drag and drop images here.
+      placeholder: "No mockups — engineering to propose."
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - Urgent — blocking something critical
+        - High — needed soon, has a deadline
+        - Medium — important but flexible timing
+        - Low — nice to have
+    validations:
+      required: true
+
+  - type: input
+    id: deadline
+    attributes:
+      label: Needed by
+      description: Hard deadline? Partner commitment? Or flexible?
+      placeholder: "March 30 — partner demo"
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else?
+      description: Related tickets, extra context, constraints, links.
