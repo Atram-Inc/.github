@@ -17,15 +17,13 @@ Use our [AI Prompt for Writing Tickets](https://linear.app/atram/document/engine
 
 ## Pointing System
 
-We use point labels to estimate effort on issues:
+We use a Fibonacci-based point scale to estimate effort on issues:
 
 | Label | Effort |
 |-------|--------|
 | `points:1` | Less than a day |
-| `points:2` | 1 day |
-| `points:4` | 2 days |
-| `points:6` | 3 days |
-| `points:8` | 4 days |
-| `points:10` | 5 days (1 week) |
+| `points:2` | 1 full day (accounting for other work) |
+| `points:4` | ~2 days |
+| `points:8` | Full sprint — no other tickets |
 
 Add a `points:X` label to every issue when triaging or picking it up.
