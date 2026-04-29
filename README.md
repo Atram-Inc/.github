@@ -19,11 +19,11 @@ Use our [AI Prompt for Writing Tickets](https://linear.app/atram/document/engine
 
 We use a Fibonacci-based point scale to estimate effort on issues:
 
-| Label | Effort |
-|-------|--------|
-| `points:1` | Less than a day |
-| `points:2` | 1 full day (accounting for other work) |
-| `points:4` | ~2 days |
-| `points:8` | Full sprint — no other tickets |
+| Points | Effort |
+|--------|--------|
+| 1 | Less than a day |
+| 2 | 1 full day (accounting for other work) |
+| 4 | ~2 days |
+| 8 | Full sprint — no other tickets |
 
-Add a `points:X` label to every issue when triaging or picking it up.
+Set the **Points** field on the issue's Engineering project item when triaging or picking it up. The legacy `points:*` labels were retired in 2026-04 and should not be re-added — see [`AGENTS.md`](AGENTS.md#label-deletion-gotcha) for context.
