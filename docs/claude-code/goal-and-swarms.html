@@ -2,255 +2,299 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Claude Code Cheatsheet — /goal & orchestrating-swarms</title>
+<title>Claude Code Reference — Atram Engineering</title>
 <style>
-  @page { size: A4; margin: 10mm 12mm 8mm 12mm; }
+  @page { size: A4; margin: 11mm 12mm 10mm 12mm; }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
     font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
     color: #1a1a1a;
-    font-size: 8.7pt;
+    font-size: 8.6pt;
     line-height: 1.32;
   }
-  h1 {
+
+  /* header */
+  .hdr h1 {
     font-size: 16pt;
     margin: 0 0 2px 0;
     color: #0b3d2e;
     letter-spacing: -0.2px;
   }
-  .sub {
+  .hdr .sub {
     font-size: 8.2pt;
     color: #6b6b6b;
     margin-bottom: 8px;
   }
-  .row { display: flex; gap: 8px; }
-  .card {
-    flex: 1;
-    border: 1px solid #d4d4d4;
-    border-radius: 5px;
-    padding: 6px 8px;
-    background: #fafafa;
+
+  /* section bar */
+  .section {
+    margin-top: 9px;
     break-inside: avoid;
   }
-  .card h2 {
-    font-size: 11pt;
-    margin: 0 0 4px 0;
-    color: #0b3d2e;
-    border-bottom: 1px solid #d4d4d4;
-    padding-bottom: 2px;
+  .section h2 {
+    font-size: 11.5pt;
+    color: white;
+    background: #0b3d2e;
+    margin: 0;
+    padding: 4px 8px;
+    border-radius: 4px 4px 0 0;
   }
-  .card h3 {
-    font-size: 9pt;
-    margin: 6px 0 2px 0;
+  .section.builtin h2 { background: #0b3d2e; }
+  .section.compound h2 { background: #a14d00; }
+  .section .lead {
+    font-size: 8.4pt;
+    background: #f0ece5;
+    padding: 4px 8px;
+    margin: 0;
     color: #444;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
+    border-left: 1px solid #d4d4d4;
+    border-right: 1px solid #d4d4d4;
   }
-  code, pre {
+  .section.compound .lead { background: #faf2e6; }
+
+  /* grid of command cards */
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 6px;
+    background: #fafafa;
+    border: 1px solid #d4d4d4;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+  }
+  .cmd {
+    flex: 1 1 calc(50% - 3px);
+    min-width: 0;
+    background: white;
+    border: 1px solid #e2e2e2;
+    border-radius: 4px;
+    padding: 5px 8px;
+    break-inside: avoid;
+  }
+  .cmd .name {
     font-family: "SF Mono", Menlo, Consolas, monospace;
-    font-size: 8.2pt;
+    font-size: 9.2pt;
+    font-weight: 600;
+    color: #0b3d2e;
   }
+  .section.compound .cmd .name { color: #a14d00; }
+  .cmd .tag {
+    display: inline-block;
+    font-size: 7pt;
+    padding: 0 4px;
+    border-radius: 3px;
+    margin-left: 4px;
+    vertical-align: 2px;
+    color: white;
+    background: #888;
+  }
+  .cmd .tag.bi { background: #0b3d2e; }
+  .cmd .tag.ce { background: #a14d00; }
+  .cmd .what {
+    margin: 2px 0 3px 0;
+    font-size: 8.4pt;
+  }
+  .cmd .ex {
+    background: #f3f3ef;
+    padding: 3px 6px;
+    margin-top: 2px;
+    border-left: 2px solid #0b3d2e;
+    font-size: 8.2pt;
+    border-radius: 0 3px 3px 0;
+  }
+  .section.compound .cmd .ex { border-left-color: #a14d00; }
+  .cmd .ex b { color: #0b3d2e; }
+  .section.compound .cmd .ex b { color: #a14d00; }
   code {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 8pt;
     background: #ececec;
     padding: 0 3px;
     border-radius: 3px;
   }
-  pre {
-    background: #1f2933;
-    color: #e6e6e6;
-    padding: 6px 8px;
-    border-radius: 4px;
-    margin: 3px 0;
-    white-space: pre-wrap;
-    word-break: break-word;
+  .cmd .ex code {
+    background: #e6e6df;
   }
-  pre code { background: none; padding: 0; color: inherit; }
-  ul { margin: 2px 0 4px 16px; padding: 0; }
-  li { margin: 1px 0; }
-  .tag {
-    display: inline-block;
-    background: #0b3d2e;
-    color: white;
-    font-size: 7.5pt;
-    padding: 1px 5px;
-    border-radius: 3px;
-    margin-left: 4px;
-    vertical-align: middle;
-  }
-  .tag.warn { background: #a14d00; }
-  .pill {
-    display: inline-block;
-    background: #e8eef1;
-    color: #1a1a1a;
-    padding: 1px 6px;
-    font-size: 7.8pt;
-    border-radius: 10px;
-    margin-right: 3px;
-  }
-  .examples {
-    margin-top: 6px;
-    border: 1px solid #d4d4d4;
-    border-radius: 5px;
-    padding: 6px 8px;
-    background: #fdfdfd;
-  }
-  .examples h2 {
-    font-size: 11pt;
-    margin: 0 0 4px 0;
-    color: #0b3d2e;
-    border-bottom: 1px solid #d4d4d4;
-    padding-bottom: 2px;
-  }
-  .ex-grid { display: flex; gap: 8px; flex-wrap: wrap; }
-  .ex {
-    flex: 1 1 calc(50% - 4px);
-    min-width: 0;
-    background: #f5f7f5;
-    border-left: 3px solid #0b3d2e;
-    padding: 3px 6px;
-    border-radius: 0 4px 4px 0;
-  }
-  .ex.swarm { border-left-color: #a14d00; background: #faf5ef; }
-  .ex b { font-size: 8.6pt; }
-  .ex .desc { font-size: 8.4pt; color: #333; margin: 1px 0 2px 0; }
+
   .footer {
-    margin-top: 5px;
+    margin-top: 10px;
     font-size: 7.4pt;
     color: #6b6b6b;
     border-top: 1px solid #d4d4d4;
-    padding-top: 3px;
+    padding-top: 4px;
   }
-  .footer a { color: #0b3d2e; text-decoration: none; }
-  .gotcha {
-    background: #fff8e6;
-    border-left: 3px solid #c99a2e;
-    padding: 4px 7px;
-    margin-top: 4px;
-    font-size: 8.5pt;
-    border-radius: 0 4px 4px 0;
-  }
+  .footer a, .footer code { color: #0b3d2e; }
 </style>
 </head>
 <body>
 
-<h1>Claude Code Cheatsheet — <code>/goal</code> &amp; <code>orchestrating-swarms</code></h1>
-<div class="sub">Two ways to make Claude Code work on its own across many turns. One-pager for Atram engineers — last updated 2026-05-22.</div>
+<div class="hdr">
+  <h1>Claude Code Reference — Atram Engineering</h1>
+  <div class="sub">Built-in CLI commands and <b>compound-engineering</b> plugin skills (by Kieran Klaassen / Every), grouped by what you'd reach for them to do. Updated 2026-05-22.</div>
+</div>
 
-<div class="row">
+<!-- ================== AUTONOMOUS LOOPS ================== -->
+<div class="section builtin">
+  <h2>Autonomous loops — set a target, walk away</h2>
+  <div class="lead">For work that benefits from multiple turns without supervision: tests that flake, lints to clean, plans to draft, reviews to gather. Always bound them with a turn cap or a clear exit condition.</div>
+  <div class="grid">
 
-  <!-- ============ /goal ============ -->
-  <div class="card">
-    <h2><code>/goal</code> <span class="tag">built-in · v2.1.139+</span></h2>
+    <div class="cmd">
+      <div class="name">/goal <span class="tag bi">built-in</span></div>
+      <div class="what">Sets a completion condition; Claude loops turn-after-turn while a Haiku evaluator checks the transcript. Stops when the condition holds or you <code>/goal clear</code>. Survives <code>--resume</code>.</div>
+      <div class="ex"><b>Use it for:</b> "<code>pytest tests/alerts runs 10× green, or stop after 25 turns</code>" — flaky-test hunts, lint-clean before a PR, migration backfill parity checks.</div>
+    </div>
 
-    <h3>What it does</h3>
-    Sets a completion condition. Claude keeps working turn after turn without prompting; an evaluator model (Haiku by default) checks the transcript after each turn and decides whether to stop. Clears automatically when the condition holds.
+    <div class="cmd">
+      <div class="name">/ultraplan <span class="tag bi">built-in</span></div>
+      <div class="what">Offloads planning to a cloud session. Draft a multi-step plan collaboratively in the browser, annotate sections, then execute locally or in cloud.</div>
+      <div class="ex"><b>Use it for:</b> the kickoff of a non-trivial Atram feature — e.g. designing the ET WhatsApp/Telegram channel split before writing code.</div>
+    </div>
 
-    <h3>Commands</h3>
-<pre><code>/goal &lt;condition&gt;   # set &amp; start
-/goal               # status: turns, tokens, evaluator reasoning
-/goal clear         # stop early</code></pre>
+    <div class="cmd">
+      <div class="name">/ultrareview <span class="tag bi">built-in</span></div>
+      <div class="what">Spawns a multi-agent cloud review of the current branch (or a GitHub PR). Each reviewer covers a different angle (security, perf, style) and aggregates findings.</div>
+      <div class="ex"><b>Use it for:</b> a final sweep before merging yaya-engine work to <code>dev</code>. Run <code>/ultrareview &lt;PR#&gt;</code> from the terminal — billed, user-triggered.</div>
+    </div>
 
-    <h3>Session behavior</h3>
-    <ul>
-      <li>Persists across turns within the session</li>
-      <li>Survives <code>--resume</code> if the session ends mid-goal</li>
-      <li>Does <b>not</b> survive new sessions (unlike hooks)</li>
-      <li>Works in headless mode (<code>-p</code> flag)</li>
-    </ul>
+    <div class="cmd">
+      <div class="name">/slfg <span class="tag ce">CE</span></div>
+      <div class="what">Compound-engineering's <i>full autonomous engineering workflow</i>: plan → implement → review, all in swarm mode with parallel sub-agents. The biggest gun in the kit.</div>
+      <div class="ex"><b>Use it for:</b> end-to-end feature work where you're happy to come back to a finished PR (and don't mind paying for the agents). Pair with a tight ticket description.</div>
+    </div>
 
-    <h3>Writing good conditions</h3>
-    <ul>
-      <li>Phrase as something <b>visible in the transcript</b> — the evaluator can't run shell commands or read files</li>
-      <li>Always include a turn cap: <code>… or stop after 20 turns</code></li>
-      <li>Make it boolean: passes/fails, exits 0/non-zero, clean/dirty</li>
-    </ul>
+    <div class="cmd" style="flex-basis: 100%;">
+      <div class="name">/compound-engineering:orchestrating-swarms <span class="tag ce">CE</span></div>
+      <div class="what">Lower-level than <code>/slfg</code> — packages Claude Code's <code>Task</code> tool + TeammateTool messaging into a swarm protocol with file-backed JSON state, dependency ordering, leader/worker roles, inbox-style coordination.</div>
+      <div class="ex"><b>Use it for:</b> bespoke multi-agent jobs you want reproducible across runs — e.g. one agent per repo scanning for hardcoded secrets, one agent per language translating WhatsApp templates with placeholder validation, parallel forecast-variant evals against a shared eval set.</div>
+    </div>
 
-    <div class="gotcha"><b>Gotcha:</b> <i>"the deploy succeeded"</i> won't work unless Claude actually prints the deploy output. Frame goals around things Claude will show.</div>
-  </div>
-
-  <!-- ============ orchestrating-swarms ============ -->
-  <div class="card">
-    <h2><code>orchestrating-swarms</code> <span class="tag warn">skill · community</span></h2>
-
-    <h3>What it is</h3>
-    A marketplace skill (compound-engineering family) that wraps Claude Code's native <code>Task</code>/Agent tool and TeammateTool into a coordinated multi-agent workflow. Not a built-in command.
-
-    <h3>What it does</h3>
-    <ul>
-      <li>Spawns multiple subagents in parallel</li>
-      <li>Dependency-aware task ordering (B waits on A)</li>
-      <li>File-backed JSON state so swarms survive across turns/sessions</li>
-      <li>Inbox-style messages between agents</li>
-      <li>A "leader" approves plans and coordinates shutdown</li>
-    </ul>
-
-    <h3>How to invoke</h3>
-<pre><code>/compound-engineering:orchestrating-swarms</code></pre>
-    The skill emits the swarm protocol; the parent agent fans out work via the Task tool and the swarm tracks state in a local JSON store.
-
-    <h3>When to reach for it</h3>
-    <ul>
-      <li>The work is genuinely parallel (3+ independent chunks)</li>
-      <li>You want reproducible runs you can re-enter later</li>
-      <li>You need cross-agent messaging, not just fan-out</li>
-    </ul>
-
-    <div class="gotcha"><b>Don't use it for:</b> a single linear task, or anything <code>/goal</code> + one agent can handle. Swarms add coordination overhead.</div>
   </div>
 </div>
 
-<!-- ============ examples ============ -->
-<div class="examples">
-  <h2>Where they pay off at Atram</h2>
-  <div class="ex-grid">
+<!-- ================== SESSION CONTROL ================== -->
+<div class="section builtin">
+  <h2>Session control — manage the conversation</h2>
+  <div class="lead">Built-in commands for navigating long sessions, recovering from dead-ends, moving between local/cloud, and changing how you talk to Claude.</div>
+  <div class="grid">
 
-    <div class="ex">
-      <b><span class="pill">/goal</span> Flaky test hunt</b>
-      <div class="desc"><code>/goal pytest tests/alerts runs 10 times in a row with all green, or stop after 25 turns</code> — Claude re-runs, inspects failures, patches, re-runs. You read the diff at the end.</div>
+    <div class="cmd">
+      <div class="name">/recap <span class="tag bi">built-in</span></div>
+      <div class="what">Summarises what happened in the session while you were away. Useful after a long autonomous run or a multi-day resumed session.</div>
+      <div class="ex"><b>Use it for:</b> waking up to a <code>/goal</code> that finished overnight — get the gist without scrolling through 40 turns of tool calls.</div>
     </div>
 
-    <div class="ex">
-      <b><span class="pill">/goal</span> Migration backfill verification</b>
-      <div class="desc"><code>/goal supabase-py count on users_v2 equals count on users for every country, or stop after 15 turns</code> — runs the comparison, identifies drift, prints reasoning, halts on parity.</div>
+    <div class="cmd">
+      <div class="name">/rewind <span class="tag bi">built-in</span></div>
+      <div class="what">Rolls code <i>and</i> conversation back to a checkpoint. Also bound to <code>Esc Esc</code>. Lets you explore a risky approach and undo cleanly.</div>
+      <div class="ex"><b>Use it for:</b> trying a speculative refactor in yaya-engine without polluting your branch — rewind if it doesn't pan out.</div>
     </div>
 
-    <div class="ex">
-      <b><span class="pill">/goal</span> Lint-clean a branch</b>
-      <div class="desc"><code>/goal ruff check . and eslint . both exit 0, or stop after 20 turns</code> — useful before opening a PR. Bound the turn count or it'll grind on whitespace forever.</div>
+    <div class="cmd">
+      <div class="name">/teleport <span class="tag bi">built-in</span></div>
+      <div class="what">Moves a session between your terminal and the web (and back). Full conversation history travels with it.</div>
+      <div class="ex"><b>Use it for:</b> kicking off a long task in the cloud from your laptop, then teleporting it locally when you need filesystem access or your editor.</div>
     </div>
 
-    <div class="ex">
-      <b><span class="pill">/goal</span> Headless CI helper</b>
-      <div class="desc">In <code>-p</code> mode on a CI runner: <code>/goal all yaya-engine integration tests pass, or stop after 12 turns</code>. Pipes diagnostics back without you babysitting.</div>
+    <div class="cmd">
+      <div class="name">/voice <span class="tag bi">built-in</span></div>
+      <div class="what">Toggles speech-to-text dictation for prompts. Modes: <code>/voice hold</code> (push-to-talk), <code>/voice tap</code> (toggle).</div>
+      <div class="ex"><b>Use it for:</b> long context dumps (describing a bug, walking through a feature) when typing slows you down. Caveat: punctuation needs cleanup.</div>
     </div>
 
-    <div class="ex swarm">
-      <b><span class="pill">swarms</span> Multi-repo audit</b>
-      <div class="desc">One agent per repo (yaya-engine, yaya-frontend, atram-utils-webapp, alert-manager) — each scans for hardcoded secrets, reports back to a leader that aggregates into one issue.</div>
+    <div class="cmd">
+      <div class="name">/radio <span class="tag bi">built-in</span></div>
+      <div class="what">Opens Claude FM (music streaming) in your browser. Pure background-noise utility, no engineering purpose.</div>
+      <div class="ex"><b>Use it for:</b> a soundtrack while a long swarm or <code>/goal</code> chugs in another pane. That's it.</div>
     </div>
 
-    <div class="ex swarm">
-      <b><span class="pill">swarms</span> Parallel code review</b>
-      <div class="desc">Three reviewers (security, performance, Rails-style) work the same diff at once; leader consolidates findings, deduplicates, posts a single PR comment.</div>
+  </div>
+</div>
+
+<!-- ================== AUTHORING & EXTENDING ================== -->
+<div class="section compound">
+  <h2>Authoring &amp; extending Claude Code</h2>
+  <div class="lead">Tools for shaping how Claude Code behaves on this project — bootstrapping config, writing reusable skills, designing systems where agents are first-class.</div>
+  <div class="grid">
+
+    <div class="cmd">
+      <div class="name">/setup <span class="tag ce">CE</span></div>
+      <div class="what">Diagnoses the project's dev environment, installs missing tools, and bootstraps the compound-engineering config (CLAUDE.md, hooks, allowlists). One-shot project init.</div>
+      <div class="ex"><b>Use it for:</b> onboarding a new Atram repo to compound-engineering — point it at <code>yaya-frontend</code> or <code>atram-utils-webapp</code> and let it scaffold.</div>
     </div>
 
-    <div class="ex swarm">
-      <b><span class="pill">swarms</span> Weather model evaluation sweep</b>
-      <div class="desc">N agents each run a different forecast variant against the same eval set, write results to shared JSON state. Leader builds a comparison table.</div>
+    <div class="cmd">
+      <div class="name">/skill-creator <span class="tag ce">CE</span></div>
+      <div class="what">Guided authoring of new Claude Code skills — generates a SKILL.md, frontmatter, triggers, and the recommended file layout. Includes review of existing skill patterns.</div>
+      <div class="ex"><b>Use it for:</b> turning a recurring Atram workflow (e.g. "create alert template + push to WABA + verify webhook") into a reusable <code>/atram-alert-publish</code> skill.</div>
     </div>
 
-    <div class="ex swarm">
-      <b><span class="pill">swarms</span> WhatsApp template translation</b>
-      <div class="desc">One agent per language (EN, ES, AM, SW) translates the same template set in parallel, leader validates placeholders match across all outputs before committing.</div>
+    <div class="cmd" style="flex-basis: 100%;">
+      <div class="name">/agent-native-architecture <span class="tag ce">CE</span></div>
+      <div class="what">Design guidance for building systems where agents are first-class citizens — MCP tools, self-modifying loops, applications whose features are outcomes that agents achieve. Pushes you to think tool-first, not UI-first.</div>
+      <div class="ex"><b>Use it for:</b> early design of new internal tooling (alert-manager rewrite, ETL pipelines) where the operators will be a mix of humans and agents. Output: a list of MCP tools to build, with their contracts.</div>
     </div>
+
+  </div>
+</div>
+
+<!-- ================== TESTING ================== -->
+<div class="section compound">
+  <h2>Testing</h2>
+  <div class="lead">Skills that drive real test runs — browser pages, iOS simulators — so the agent can see results, not just imagine them.</div>
+  <div class="grid">
+
+    <div class="cmd">
+      <div class="name">/test-browser <span class="tag ce">CE</span></div>
+      <div class="what">Runs browser tests on pages affected by the current PR or branch. Spins up a headless browser, exercises flows, returns screenshots and console errors.</div>
+      <div class="ex"><b>Use it for:</b> verifying the atram-utils-webapp geocoder widget after a CSS or JS change — confirm the address search still resolves and the map renders.</div>
+    </div>
+
+    <div class="cmd">
+      <div class="name">/test-xcode <span class="tag ce">CE</span></div>
+      <div class="what">Builds and runs iOS apps on the simulator, captures test results, and feeds failures back to the agent for fixing.</div>
+      <div class="ex"><b>Use it for:</b> a-pachas-ios changes — run the test suite on a simulator without leaving the terminal, let Claude iterate on failing assertions.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================== DATA, FILES & FRAMEWORKS ================== -->
+<div class="section compound">
+  <h2>Data, files &amp; frameworks</h2>
+  <div class="lead">Skills for moving files between clouds, telling stories with data, and building production LLM features in Ruby.</div>
+  <div class="grid">
+
+    <div class="cmd">
+      <div class="name">/rclone <span class="tag ce">CE</span></div>
+      <div class="what">Uploads / syncs files across cloud providers via rclone — S3, R2, B2, GDrive, Dropbox. Handles auth, retries, and large transfers.</div>
+      <div class="ex"><b>Use it for:</b> shipping forecast outputs from <code>weather-model-evaluations</code> to S3, syncing template assets to <code>pdf-hosting-atram</code>, backing up large JSON dumps.</div>
+    </div>
+
+    <div class="cmd">
+      <div class="name">/data-storytelling <span class="tag ce">CE</span></div>
+      <div class="what">Transforms raw analytics into stakeholder-ready narratives — visualisation choice, context, persuasive structure. Outputs charts, decks, executive summaries.</div>
+      <div class="ex"><b>Use it for:</b> turning a Colombia user-engagement query result into a one-slide narrative for an ops review, or framing alert delivery stats for a partner report.</div>
+    </div>
+
+    <div class="cmd" style="flex-basis: 100%;">
+      <div class="name">/dspy-ruby <span class="tag ce">CE</span></div>
+      <div class="what">Build type-safe LLM features in Ruby using DSPy.rb — programmatic prompts via signatures and modules, agent systems with tools, prompt optimisation, and tests. The Ruby answer to building predictable, testable AI features.</div>
+      <div class="ex"><b>Use it for:</b> any Rails-side AI feature (alert summarisation, message classification, user-intent extraction) where you want the LLM call to look like a typed method, not a fragile prompt string.</div>
+    </div>
+
   </div>
 </div>
 
 <div class="footer">
-  Official <code>/goal</code>: <a>code.claude.com/docs/en/goal</a> &nbsp;·&nbsp;
-  Swarms guide: <a>gist.github.com/kieranklaassen/4f2aba89594a4aea4ad64d753984b2ea</a> &nbsp;·&nbsp;
-  Source: <code>Atram-Inc/.github/docs/claude-code/goal-and-swarms.html</code>
+  <b>Sources:</b>
+  Built-in commands: <code>code.claude.com/docs/en/</code>
+  · Compound-engineering plugin: <code>github.com/EveryInc/compound-engineering-plugin</code>
+  · Every guide: <code>every.to/guides/compound-engineering</code>
+  · Swarms reference: <code>gist.github.com/kieranklaassen/4f2aba89594a4aea4ad64d753984b2ea</code>
+  · Source file: <code>Atram-Inc/.github/docs/claude-code/goal-and-swarms.html</code>
 </div>
 
 </body>
