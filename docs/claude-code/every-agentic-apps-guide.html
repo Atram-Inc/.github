@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Every's Agentic Apps & Compound Engineering — A Field Guide for Atram</title>
+<style>
+  @page { size: A4; margin: 14mm 14mm 13mm 14mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color: #1f1f1f;
+    font-size: 10pt;
+    line-height: 1.45;
+  }
+  a { color: #0b3d2e; text-decoration: none; border-bottom: 0.5px solid #b9cfc6; }
+  h1, h2, h3 { letter-spacing: -0.2px; }
+
+  /* ---------- cover header ---------- */
+  .hdr {
+    border-bottom: 3px solid #0b3d2e;
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+  }
+  .hdr .kicker {
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    color: #a14d00;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .hdr h1 {
+    font-size: 21pt;
+    margin: 0 0 6px 0;
+    color: #0b3d2e;
+    line-height: 1.12;
+  }
+  .hdr .sub {
+    font-size: 10pt;
+    color: #555;
+    margin: 0;
+  }
+  .hdr .meta {
+    font-size: 8pt;
+    color: #888;
+    margin-top: 7px;
+  }
+
+  /* ---------- callout box ---------- */
+  .startbox {
+    background: #f0ece5;
+    border: 1px solid #d9cdba;
+    border-left: 5px solid #a14d00;
+    border-radius: 6px;
+    padding: 11px 14px;
+    margin-bottom: 16px;
+    break-inside: avoid;
+  }
+  .startbox h2 {
+    font-size: 12pt;
+    color: #a14d00;
+    margin: 0 0 6px 0;
+  }
+  .startbox p { margin: 0 0 6px 0; font-size: 9.4pt; }
+  .startbox ul { margin: 4px 0 0 0; padding-left: 18px; }
+  .startbox li { font-size: 9.4pt; margin-bottom: 3px; }
+
+  /* ---------- badges ---------- */
+  .badge {
+    display: inline-block;
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1px 6px;
+    border-radius: 10px;
+    vertical-align: 1.5px;
+    color: white;
+  }
+  .b-pm   { background: #0b7a55; }   /* good for everyone / PMs */
+  .b-tech { background: #6b6b6b; }   /* more technical */
+  .b-try  { background: #a14d00; }   /* try it / install */
+  .legend { font-size: 8pt; color: #666; margin: 10px 0 4px 0; }
+  .legend .badge { margin-right: 3px; }
+
+  /* ---------- table of contents ---------- */
+  .toc {
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
+    break-inside: avoid;
+  }
+  .toc h2 { font-size: 11pt; color: #0b3d2e; margin: 0 0 6px 0; }
+  .toc ol { margin: 0; padding-left: 20px; }
+  .toc li { font-size: 9.4pt; margin-bottom: 3px; }
+  .toc a { border-bottom: none; }
+  .toc .desc { color: #888; font-size: 8.4pt; }
+
+  /* ---------- section ---------- */
+  .section { margin-top: 22px; }
+  .section > h2 {
+    font-size: 14pt;
+    color: white;
+    background: #0b3d2e;
+    margin: 0 0 10px 0;
+    padding: 6px 12px;
+    border-radius: 5px;
+  }
+  .section.amber > h2 { background: #a14d00; }
+  .section .intro { font-size: 9.4pt; color: #444; margin: 0 0 12px 0; }
+
+  /* ---------- essay / item card ---------- */
+  .item {
+    border: 1px solid #e2e2e2;
+    border-radius: 6px;
+    padding: 9px 12px;
+    margin-bottom: 9px;
+    break-inside: avoid;
+  }
+  .item .top { margin-bottom: 3px; }
+  .item h3 {
+    font-size: 10.5pt;
+    margin: 0 0 2px 0;
+    color: #0b3d2e;
+    display: inline;
+  }
+  .item .by { font-size: 8pt; color: #999; margin: 1px 0 5px 0; }
+  .item p { margin: 0 0 5px 0; font-size: 9.2pt; }
+  .item .why {
+    background: #eef5f1;
+    border-left: 3px solid #0b7a55;
+    padding: 4px 8px;
+    border-radius: 0 4px 4px 0;
+    font-size: 9pt;
+  }
+  .item .why b { color: #0b7a55; }
+  .item .link { font-size: 8.3pt; word-break: break-all; }
+  .item .link b { color: #555; }
+
+  /* ---------- apps table ---------- */
+  table { width: 100%; border-collapse: collapse; font-size: 8.8pt; margin-bottom: 6px; }
+  th {
+    background: #0b3d2e; color: white; text-align: left;
+    padding: 5px 7px; font-size: 8.4pt;
+  }
+  td { padding: 5px 7px; border-bottom: 1px solid #e6e6e6; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+  td .app { font-weight: 700; color: #0b3d2e; font-size: 9.2pt; }
+  td a { word-break: break-all; }
+  .pill {
+    display: inline-block; font-size: 6.6pt; font-weight: 700;
+    padding: 0 5px; border-radius: 8px; color: white; white-space: nowrap;
+  }
+  .pill.open { background: #0b7a55; }
+  .pill.closed { background: #999; }
+
+  /* ---------- code ---------- */
+  code {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 8.4pt; background: #ececec;
+    padding: 0 4px; border-radius: 3px;
+  }
+  .codeblock {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 8.6pt; background: #1f2d28; color: #e9f3ee;
+    padding: 8px 11px; border-radius: 5px; margin: 6px 0;
+    white-space: pre-wrap; line-height: 1.5;
+  }
+  .codeblock .c { color: #9bb5ab; }
+
+  /* ---------- footer ---------- */
+  .footer {
+    margin-top: 24px; border-top: 1px solid #d4d4d4;
+    padding-top: 8px; font-size: 8pt; color: #777;
+  }
+  .footer h3 { font-size: 9pt; color: #0b3d2e; margin: 0 0 4px 0; }
+  .footer p { margin: 0 0 5px 0; }
+  .footer a { color: #0b3d2e; }
+  .pagebreak { break-before: page; }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<div class="hdr">
+  <div class="kicker">Atram Engineering · Internal Field Guide</div>
+  <h1>How Every Builds Agentic Apps</h1>
+  <p class="sub">What the Every team (the makers of the <b>compound-engineering</b> plugin many of us run in Claude Code) believes about building software that hands real freedom to the user through LLMs — plus every app they ship, where to get it, and what's worth your time.</p>
+  <p class="meta">Researched &amp; compiled 2026-05-25 · Sources verified against every.to, the EveryInc GitHub org, and live search · Caveats at the end.</p>
+</div>
+
+<!-- ================= START HERE (PM) ================= -->
+<div class="startbox">
+  <h2>★ Start here if you're a PM or client-facing (not a dev)</h2>
+  <p>You don't need to read this whole thing. Here's the 60-second version and the three places worth your time:</p>
+  <p><b>The big idea:</b> Every (the AI studio led by Dan Shipper, with Kieran Klaassen behind the compound-engineering plugin) argues the next generation of apps shouldn't hard-code every button and flow. Instead you give an LLM a few simple tools and let it figure out <i>how</i> to get the user's outcome — so users change what the app does just by <b>asking in plain language</b>. They call this <b>"agent-native."</b></p>
+  <ul>
+    <li><b>Read one essay:</b> "Agent-native Architectures: How to Build Apps After the End of Code" — see <a href="#ideas">Section 1</a>. It's written for thinkers, not coders.</li>
+    <li><b>Try one app:</b> their products in <a href="#apps">Section 2</a> are the idea made real — <b>Cora</b> (email that triages itself), <b>Sparkle</b> (a Mac that cleans itself when you ask), <b>Monologue</b> (dictation that fixes your tone).</li>
+    <li><b>Listen on a commute:</b> the talks &amp; podcast in <a href="#follow">Section 4</a> explain all of this conversationally — no code required.</li>
+  </ul>
+</div>
+
+<div class="legend">
+  <b>Badges used in this guide:</b>
+  <span class="badge b-pm">For everyone</span> approachable, no code needed &nbsp;
+  <span class="badge b-tech">More technical</span> aimed at engineers &nbsp;
+  <span class="badge b-try">Try / install</span> something you can actually use
+</div>
+
+<!-- ================= TOC ================= -->
+<div class="toc">
+  <h2>What's inside</h2>
+  <ol>
+    <li><a href="#ideas">The Big Ideas</a> <span class="desc">— why apps should give users freedom through LLMs (the essays)</span></li>
+    <li><a href="#apps">The Apps</a> <span class="desc">— everything Every ships, with links, what it does, and who it's for</span></li>
+    <li><a href="#plugin">The Compound-Engineering Plugin</a> <span class="desc">— the one in our Claude Code, and how to install it</span></li>
+    <li><a href="#follow">Watch, Listen &amp; Follow</a> <span class="desc">— podcast episodes, talks and accounts (great for non-devs)</span></li>
+    <li><a href="#takeaways">Takeaways for Atram</a> <span class="desc">— why this matters for how we build</span></li>
+  </ol>
+</div>
+
+<!-- ================= SECTION 1: IDEAS ================= -->
+<div class="section" id="ideas">
+  <h2>1 · The Big Ideas — software that gives users freedom through LLMs</h2>
+  <p class="intro">The core thesis across Every's writing: stop hard-coding every feature. Define a few atomic tools, let an agent decide how to combine them, and let the user steer it in plain language. These are the essays that make the case, most useful first.</p>
+
+  <div class="item">
+    <div class="top">
+      <h3>Agent-native Architectures: How to Build Apps After the End of Code</h3>
+      <span class="badge b-pm">For everyone</span>
+    </div>
+    <div class="by">Dan Shipper · every.to</div>
+    <p>The flagship piece. The core of an app shouldn't be code but an agent — "something squishy and alive." Developers describe the <i>what</i> (the outcome) and let the agent work out the <i>how</i>. The payoff for users: they can change how the app behaves <b>just by changing words in a language we already speak.</b></p>
+    <div class="why"><b>Why it matters for you:</b> this is the single best explainer of the whole philosophy, written for a general audience. If a client asks "why is your AI product different from a normal app?" — this is your answer.</div>
+    <div class="link"><b>Read:</b> <a href="https://every.to/chain-of-thought/agent-native-architectures-how-to-build-apps-after-the-end-of-code">every.to/chain-of-thought/agent-native-architectures…</a> · hub: <a href="https://every.to/guides/agent-native">every.to/guides/agent-native</a></div>
+  </div>
+
+  <div class="item">
+    <div class="top">
+      <h3>How to Build Agent-native: Lessons From Four Apps</h3>
+      <span class="badge b-pm">For everyone</span>
+    </div>
+    <div class="by">Katie Parrott · every.to</div>
+    <p>The practical companion. Three design principles in plain terms: <b>parity</b> (anything the user can do, the agent can do too), <b>granularity</b> (give the AI small, simple tools), and <b>composability</b> (small tools combine in ways nobody explicitly designed). Key honesty: hard guarantees like "confirm before deleting" must live in real code — "prompts are still suggestions."</p>
+    <div class="why"><b>Why it matters for you:</b> it walks through four real products (Cora, Sparkle, Monologue, a book app), so you see the abstract idea become shippable features. Great for grounding a product conversation.</div>
+    <div class="link"><b>Read:</b> <a href="https://every.to/source-code/how-to-build-agent-native-lessons-from-four-apps">every.to/source-code/how-to-build-agent-native-lessons-from-four-apps</a></div>
+  </div>
+
+  <div class="item">
+    <div class="top">
+      <h3>The Knowledge Economy Is Over. Welcome to the Allocation Economy.</h3>
+      <span class="badge b-pm">For everyone</span>
+    </div>
+    <div class="by">Dan Shipper · every.to</div>
+    <p>The worldview behind it all: as AI does more knowledge work, every worker shifts from <i>maker</i> to <i>manager/allocator</i> — you direct AI toward outcomes instead of executing each task. "Every maker becomes a manager."</p>
+    <div class="why"><b>Why it matters for you:</b> this is basically a description of the modern PM/operator role. Useful framing for how our own teams (and clients' teams) will work alongside agents.</div>
+    <div class="link"><b>Read:</b> <a href="https://every.to/chain-of-thought/the-knowledge-economy-is-over-welcome-to-the-allocation-economy">every.to/chain-of-thought/the-knowledge-economy-is-over…</a></div>
+  </div>
+
+  <div class="item">
+    <div class="top">
+      <h3>The Folder Is the Agent</h3>
+      <span class="badge b-tech">More technical</span>
+    </div>
+    <div class="by">Kieran Klaassen · every.to</div>
+    <p>Argues you don't need heavy multi-agent frameworks. A plain project folder — an instructions file plus accumulated context — <i>is</i> an agent: point a general model at it and it becomes a domain specialist. Freedom comes from <b>context, not more code.</b></p>
+    <div class="why"><b>Why it matters for you:</b> lighter read for the curious. Explains why our own Claude Code setups get smarter the more context we feed them.</div>
+    <div class="link"><b>Read:</b> <a href="https://every.to/source-code/the-folder-is-the-agent">every.to/source-code/the-folder-is-the-agent</a></div>
+  </div>
+
+  <div class="item">
+    <div class="top">
+      <h3>Compound Engineering: How Every Codes With Agents</h3>
+      <span class="badge b-tech">More technical</span>
+    </div>
+    <div class="by">Dan Shipper &amp; Kieran Klaassen · every.to</div>
+    <p>How a tiny team ships like a big one: nobody writes code by hand; engineers orchestrate parallel agents in a loop — <b>plan → work → review → compound</b> — spending ~80% on planning/review and ~20% on coding, so each feature makes the next one <i>easier</i>.</p>
+    <div class="why"><b>Why it matters for you:</b> this is the method behind the plugin in our Claude Code. Helps you understand why "planning and review" is where the real work happens now.</div>
+    <div class="link"><b>Read:</b> <a href="https://every.to/chain-of-thought/compound-engineering-how-every-codes-with-agents">every.to/chain-of-thought/compound-engineering-how-every-codes-with-agents</a> · hub: <a href="https://every.to/guides/compound-engineering">every.to/guides/compound-engineering</a></div>
+  </div>
+
+  <div class="item">
+    <div class="top">
+      <h3>More for the curious</h3>
+      <span class="badge b-tech">More technical</span>
+    </div>
+    <div class="by">Various · every.to</div>
+    <p>Deeper cuts worth bookmarking:</p>
+    <div class="link">
+      • <b>Compound Engineering: The Definitive Guide</b> — <a href="https://every.to/source-code/compound-engineering-the-definitive-guide">every.to/source-code/compound-engineering-the-definitive-guide</a><br>
+      • <b>My AI Had Already Fixed the Code Before I Saw It</b> (the origin essay) — <a href="https://every.to/source-code/my-ai-had-already-fixed-the-code-before-i-saw-it">every.to/source-code/my-ai-had-already-fixed-the-code-before-i-saw-it</a><br>
+      • <b>Compound Engineering Camp: Every Step, From Scratch</b> (1-hour build walk-through) — <a href="https://every.to/source-code/compound-engineering-camp-every-step-from-scratch">every.to/source-code/compound-engineering-camp-every-step-from-scratch</a><br>
+      • <b>The Magic Minimum for AI Agents</b> — <a href="https://every.to/chain-of-thought/the-magic-minimum-for-ai-agents">every.to/chain-of-thought/the-magic-minimum-for-ai-agents</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SECTION 2: APPS ================= -->
+<div class="section pagebreak" id="apps">
+  <h2>2 · The Apps — everything Every ships</h2>
+  <p class="intro">Every runs a software studio; its full lineup lives at <a href="https://every.to/studio">every.to/studio</a>, and most apps are bundled in <b>The Every Bundle (~$30/mo)</b>. Most consumer apps are closed-source SaaS, but several have open-source companion tools (CLIs, MCP servers, SDKs) under <a href="https://github.com/EveryInc">github.com/EveryInc</a>. The <span class="pill open">OPEN</span> / <span class="pill closed">CLOSED</span> pill shows whether there's code you can read.</p>
+
+  <table>
+    <tr>
+      <th style="width:14%">App</th>
+      <th style="width:30%">What it does &amp; why it's "agentic"</th>
+      <th style="width:30%">Get it / links</th>
+      <th style="width:26%">Good for…</th>
+    </tr>
+    <tr>
+      <td><span class="app">Cora</span><br><span class="pill closed">CLOSED</span></td>
+      <td>AI email assistant — screens your inbox, batches &amp; triages mail, drafts replies, sends a daily brief. Agentic but deliberately cautious: never sends or deletes without your OK.</td>
+      <td>Site: <a href="https://cora.computer">cora.computer</a><br>Sign up: <a href="https://cora.computer/users/sign_up">cora.computer/users/sign_up</a> (7-day trial)</td>
+      <td>Anyone drowning in email. The clearest "agent does the work for you" demo to show a client.</td>
+    </tr>
+    <tr>
+      <td><span class="app">Sparkle</span><br><span class="pill open">OPEN*</span></td>
+      <td>AI Mac file organizer — finds junk &amp; duplicates and tidies your files from a plain-language instruction ("say it your way") instead of manual rules.</td>
+      <td>Site: <a href="https://makeitsparkle.co">makeitsparkle.co</a><br>Docs: <a href="https://help.every.to/en/collections/17210091-sparkle">help.every.to/…/sparkle</a><br>Open MCP server: <a href="https://github.com/EveryInc/sparkle-mcp-server">github.com/EveryInc/sparkle-mcp-server</a></td>
+      <td>Mac users with messy Downloads folders. *App is closed; the MCP connector is open source.</td>
+    </tr>
+    <tr>
+      <td><span class="app">Monologue</span><br><span class="pill open">OPEN*</span></td>
+      <td>AI voice dictation — turns speech into polished text in your tone, drops filler words, 100+ languages, writing modes (email/notes/code).</td>
+      <td>Site: <a href="https://monologue.to">monologue.to</a><br>App Store (Mac/iPhone/iPad/Watch): <a href="https://apps.apple.com/us/app/monologue-smart-dictation/id6755956193">apps.apple.com/…/id6755956193</a><br>Open toolkit: <a href="https://github.com/EveryInc/monologue-toolkit">github.com/EveryInc/monologue-toolkit</a></td>
+      <td>Anyone who'd rather talk than type. Free tier available. *Companion CLI is open.</td>
+    </tr>
+    <tr>
+      <td><span class="app">Spiral</span><br><span class="pill closed">CLOSED</span></td>
+      <td>AI writing partner "with taste" — turns one idea into social posts / marketing copy / long-form, asks clarifying questions and matches your style.</td>
+      <td>Site: <a href="https://writewithspiral.com">writewithspiral.com</a><br>Web app: <a href="https://app.writewithspiral.com">app.writewithspiral.com</a><br>Docs: <a href="https://help.every.to/en/collections/17210081-spiral">help.every.to/…/spiral</a></td>
+      <td>Marketing &amp; client-comms folks who repurpose content. CLI exists: <code>npm i -g @every-env/spiral-cli</code></td>
+    </tr>
+    <tr>
+      <td><span class="app">Proof</span><br><span class="pill open">OPEN</span></td>
+      <td>Collaborative doc editor where <b>humans and AI agents co-author</b> — live agent presence, suggestions, and character-level "who wrote this" provenance. The purest example of the philosophy.</td>
+      <td>Site: <a href="https://www.proofeditor.ai">proofeditor.ai</a><br>Start: <a href="https://www.proofeditor.ai/get-started">proofeditor.ai/get-started</a><br>Open SDK: <a href="https://github.com/EveryInc/proof-sdk">github.com/EveryInc/proof-sdk</a></td>
+      <td>Free, no login. Devs who want a reference implementation they can actually read.</td>
+    </tr>
+    <tr>
+      <td><span class="app">Plus One</span><br><span class="pill closed">CLOSED</span></td>
+      <td>One-click personal AI agent inside Slack — connected to Every's apps + your tools, with memory, personality, and recurring scheduled work.</td>
+      <td>Waitlist: <a href="https://every.to/plus-one">every.to/plus-one</a> (paid subscribers prioritized)</td>
+      <td>Early-adopters curious about a persistent personal agent. Not GA yet.</td>
+    </tr>
+  </table>
+  <p class="intro" style="margin-top:8px;">Also on the studio page under <b>Experiments</b> (Early-Adopter only, no public repos): <b>Kairos</b>, <b>TLDR</b>, <b>Extendable Media</b>, <b>MindTune</b>, <b>Machcast</b>. &nbsp;Note: <b>Lex</b> (lex.page) was incubated at Every but spun out as its own company — it's no longer an Every product. We found no public Every product called "Diane."</p>
+</div>
+
+<!-- ================= SECTION 3: PLUGIN ================= -->
+<div class="section amber" id="plugin">
+  <h2>3 · The Compound-Engineering Plugin <span class="badge b-try" style="vertical-align:4px">Try / install</span></h2>
+  <p class="intro">This is the plugin many of us already run in Claude Code — the source of the <code>/plan</code>, <code>/work</code>, <code>/review</code>, <code>/brainstorm</code> commands and all those review agents. It's free, open source (MIT), by Kieran Klaassen at Every.</p>
+
+  <div class="item">
+    <p><b>Repository:</b> <a href="https://github.com/EveryInc/compound-engineering-plugin">github.com/EveryInc/compound-engineering-plugin</a></p>
+    <p><b>Install in Claude Code</b> (paste these two lines into Claude Code):</p>
+    <div class="codeblock">/plugin marketplace add EveryInc/compound-engineering-plugin
+/plugin install compound-engineering</div>
+    <p style="font-size:8.8pt;"><b>Also works in</b> Cursor, GitHub Copilot CLI, Factory Droid, Qwen Code and Codex (the repo README has the exact command for each).</p>
+    <div class="why" style="background:#faf2e6;border-left-color:#a14d00;"><b style="color:#a14d00;">What you get:</b> a guided workflow — <b>brainstorm → plan → work → review → compound</b> — plus dozens of specialist "review agents" (security, performance, architecture, framework-specific). The whole point: it pushes ~80% of effort into planning and review, where humans add the most value, and it <i>remembers</i> lessons so the next task is easier.</div>
+    <p style="font-size:8.4pt;color:#888;margin-top:6px;">Heads-up for whoever maintains our setup: the version installed on this machine (v2.34.0) is older than the current GitHub <code>main</code> (more agents/skills, renamed <code>ce-</code> commands). Run <code>/plugin marketplace update</code> to refresh.</p>
+  </div>
+</div>
+
+<!-- ================= SECTION 4: FOLLOW ================= -->
+<div class="section" id="follow">
+  <h2>4 · Watch, Listen &amp; Follow <span class="badge b-pm" style="vertical-align:4px">For everyone</span></h2>
+  <p class="intro">The easiest way in if you don't want to read essays. All of this explains the philosophy conversationally.</p>
+
+  <div class="item">
+    <h3>🎧 AI &amp; I podcast (Dan Shipper)</h3>
+    <div class="link" style="margin-top:4px;">
+      Hub: <a href="https://every.to/podcast">every.to/podcast</a><br>
+      • <b>How Two Engineers Ship Like a Team of 15 With AI Agents</b> — <a href="https://every.to/podcast/how-two-engineers-ship-like-a-team-of-15-with-ai-agents">every.to/podcast/how-two-engineers-ship-like-a-team-of-15-with-ai-agents</a><br>
+      • <b>The AI Sandwich: Where Humans Excel in an AI World</b> — <a href="https://every.to/podcast/transcript-the-ai-sandwich-where-humans-excel-in-an-ai-world">every.to/podcast/transcript-the-ai-sandwich…</a><br>
+      • <b>How We Built Cora (behind the scenes)</b> — <a href="https://every.to/podcast/transcript-how-we-built-our-ai-email-assistant-a-behind-the-scenes-look-at-cora">every.to/podcast/transcript-how-we-built-our-ai-email-assistant…</a>
+    </div>
+  </div>
+
+  <div class="item">
+    <h3>▶ Talks &amp; interviews (YouTube)</h3>
+    <div class="link" style="margin-top:4px;">
+      • Kieran — <b>How to Make Claude Code Better Every Time You Use It</b> (50-min tutorial) — <a href="https://www.youtube.com/watch?v=g6z_4TMDiaE">youtube.com/watch?v=g6z_4TMDiaE</a><br>
+      • Kieran — <b>Compound Engineering: Manage Teams of AI Agents</b> — <a href="https://www.youtube.com/watch?v=srh0zy1MQcI">youtube.com/watch?v=srh0zy1MQcI</a><br>
+      • Dan — <b>How to be "Agent Native" in 2026</b> (The Neuron) — <a href="https://www.youtube.com/watch?v=rHzN8uI9cn0">youtube.com/watch?v=rHzN8uI9cn0</a><br>
+      • Dan — <b>The AI-native startup: 5 products, 100% AI-written code</b> (Lenny's) — <a href="https://www.lennysnewsletter.com/p/inside-every-dan-shipper">lennysnewsletter.com/p/inside-every-dan-shipper</a>
+    </div>
+  </div>
+
+  <div class="item">
+    <h3>👤 Accounts to follow</h3>
+    <div class="link" style="margin-top:4px;">
+      • <b>Every</b> — site <a href="https://every.to">every.to</a> · X <a href="https://x.com/every">@every</a> · YouTube <a href="https://www.youtube.com/@everyinc">@everyinc</a><br>
+      • <b>Dan Shipper</b> (CEO) — X <a href="https://x.com/danshipper">@danshipper</a> · <a href="https://www.linkedin.com/in/danshipper/">LinkedIn</a><br>
+      • <b>Kieran Klaassen</b> (compound engineering, GM of Cora) — X <a href="https://x.com/kieranklaassen">@kieranklaassen</a> · <a href="https://www.linkedin.com/in/kieran-klaassen/">LinkedIn</a>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SECTION 5: TAKEAWAYS ================= -->
+<div class="section amber" id="takeaways">
+  <h2>5 · Why this matters for Atram</h2>
+  <div class="item" style="border-left:4px solid #a14d00;">
+    <p><b>1. The product lesson.</b> When we build AI features, the agent-native pattern (a few atomic tools + an LLM deciding how to combine them + the user steering in plain language) often beats hard-coding every flow. Users get freedom; we ship faster. <b>Cora</b> and <b>Sparkle</b> are the demos to point clients at.</p>
+    <p><b>2. The safety caveat.</b> Every is explicit: <i>prompts are suggestions, not guarantees.</i> Anything that must always happen — confirmations, permissions, "never send without approval" — belongs in real code, not in a prompt. Worth repeating in any client conversation about reliability.</p>
+    <p><b>3. The way-of-working lesson.</b> The compound-engineering loop (plan → work → review → compound, 80% planning/review) is already in our Claude Code. The mindset shift for everyone — devs and PMs — is that <b>planning and reviewing are now the high-value work</b>, and the system should get smarter every time we use it.</p>
+  </div>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<div class="footer">
+  <h3>Sources &amp; honesty notes</h3>
+  <p>All links were verified against <b>every.to</b>, the <b>EveryInc</b> GitHub org, and live search on 2026-05-25. The install commands and repo are confirmed (the plugin is already installed on the compiling machine). A few items carry small caveats: individual X/Twitter posts and Every's exact LinkedIn company URL came from search-result listings (X profiles were not opened directly); product pricing can change; and "Experiment" apps have no public repos. Treat product pages as the source of truth for current pricing.</p>
+  <p>Compiled for Atram PMs, client-facing colleagues, and engineers who use Claude Code. Lives in <code>.github/docs/claude-code/</code> alongside the Claude Code reference. Questions → ping the Engineering channel.</p>
+</div>
+
+</body>
+</html>
