@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Agentic Systems Landscape — Technical Edition</title>
+<style>
+  @page { size: A4; margin: 12mm 12mm 11mm 12mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Helvetica Neue", Arial, sans-serif; color: #1a1a1a; font-size: 8.7pt; line-height: 1.38; }
+  a { color: #0b3d2e; text-decoration: none; border-bottom: 0.4px solid #b9cfc6; }
+  h1,h2,h3 { letter-spacing: -0.2px; }
+  code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 7.7pt; background: #ececec; padding: 0 3px; border-radius: 3px; }
+
+  .hdr { border-bottom: 3px solid #0b3d2e; padding-bottom: 8px; margin-bottom: 11px; }
+  .hdr .kicker { font-size: 7.6pt; text-transform: uppercase; letter-spacing: 1.3px; color: #a14d00; font-weight: 700; margin-bottom: 3px; }
+  .hdr h1 { font-size: 18pt; margin: 0 0 4px 0; color: #0b3d2e; line-height: 1.1; }
+  .hdr .sub { font-size: 8.8pt; color: #555; margin: 0; }
+  .hdr .meta { font-size: 7.2pt; color: #888; margin-top: 5px; }
+
+  .abstract { background: #f0ece5; border: 1px solid #d9cdba; border-left: 5px solid #a14d00; border-radius: 6px; padding: 8px 12px; margin-bottom: 12px; break-inside: avoid; }
+  .abstract h2 { font-size: 10pt; color: #a14d00; margin: 0 0 4px 0; }
+  .abstract p { margin: 0 0 4px 0; font-size: 8.5pt; }
+
+  .toc { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 8px 12px; margin-bottom: 14px; break-inside: avoid; column-count: 2; column-gap: 18px; }
+  .toc h2 { font-size: 9.5pt; color: #0b3d2e; margin: 0 0 4px 0; column-span: all; }
+  .toc ol { margin: 0; padding-left: 17px; }
+  .toc li { font-size: 8.3pt; margin-bottom: 1.5px; }
+  .toc a { border-bottom: none; }
+
+  .section { margin-top: 15px; }
+  .section > h2 { font-size: 12pt; color: white; background: #0b3d2e; margin: 0 0 8px 0; padding: 4px 10px; border-radius: 5px; }
+  .section.amber > h2 { background: #a14d00; }
+  .section .intro { font-size: 8.6pt; color: #444; margin: 0 0 9px 0; }
+  h3.sub { font-size: 9.6pt; color: #0b3d2e; margin: 11px 0 4px 0; border-bottom: 1px solid #d8e2dd; padding-bottom: 2px; }
+  .section.amber h3.sub { color: #a14d00; border-bottom-color: #ecddc4; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 7.5pt; margin-bottom: 5px; }
+  th { background: #0b3d2e; color: white; text-align: left; padding: 3px 5px; font-size: 7.2pt; }
+  td { padding: 3px 5px; border-bottom: 1px solid #e6e6e6; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+  td .nm { font-weight: 700; color: #0b3d2e; }
+  td a { word-break: break-all; }
+  .rank { font-weight: 700; color: #a14d00; text-align: center; }
+  .pill { display: inline-block; font-size: 6pt; font-weight: 700; padding: 0 4px; border-radius: 7px; color: white; white-space: nowrap; }
+  .pill.open { background: #0b7a55; } .pill.closed { background: #999; }
+
+  .card { border: 1px solid #e2e2e2; border-radius: 6px; padding: 8px 11px; margin-bottom: 8px; break-inside: avoid; }
+  .card h3 { font-size: 10pt; margin: 0 0 1px 0; color: #0b3d2e; }
+  .card .tagline { font-size: 7.4pt; color: #999; margin: 0 0 4px 0; font-family: "SF Mono", Menlo, monospace; }
+  .card p { margin: 0 0 4px 0; font-size: 8.4pt; }
+  .card ul { margin: 3px 0; padding-left: 15px; } .card li { font-size: 8.3pt; margin-bottom: 1.5px; }
+  .card .arch { background: #1f2d28; color: #e9f3ee; font-family: "SF Mono", Menlo, monospace; font-size: 7.6pt; padding: 6px 9px; border-radius: 5px; margin: 4px 0; white-space: pre-wrap; line-height: 1.45; }
+  .card .arch .c { color: #9bb5ab; }
+
+  .note { background: #fff7e6; border-left: 3px solid #c98a00; padding: 4px 8px; font-size: 8pt; margin: 5px 0; border-radius: 0 4px 4px 0; }
+  .conf { font-size: 6.6pt; font-weight: 700; padding: 0 4px; border-radius: 6px; color: white; }
+  .conf.h { background: #0b7a55; } .conf.m { background: #c98a00; } .conf.l { background: #b03a2e; }
+
+  .footer { margin-top: 16px; border-top: 1px solid #d4d4d4; padding-top: 6px; font-size: 7.2pt; color: #777; }
+  .footer h3 { font-size: 8.4pt; color: #0b3d2e; margin: 0 0 3px 0; }
+  .footer p { margin: 0 0 4px 0; }
+  .footer a { color: #0b3d2e; }
+  .pagebreak { break-before: page; }
+  .refs { font-size: 7.4pt; color: #555; }
+  .refs a { word-break: break-all; }
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="kicker">Atram Engineering · Agentic Systems Landscape · Technical Edition</div>
+  <h1>Agentic Systems: Builders, Architectures &amp; the Research Frontier</h1>
+  <p class="sub">A technical survey of who is building agentic software and how — runtimes, protocols, benchmarks, and in-flight research — with three deep dives and a comparison. Assumes familiarity with LLMs, tool-calling, and RL.</p>
+  <p class="meta">Compiled 2026-05-26. GitHub stars fetched live this week. Benchmark scores and private valuations move fast; confidence is flagged inline (<span class="conf h">H</span> verified / <span class="conf m">M</span> reputable secondary / <span class="conf l">L</span> unverified). arXiv IDs verified against arxiv.org unless flagged.</p>
+</div>
+
+<div class="abstract">
+  <h2>TL;DR for engineers</h2>
+  <p>The stack is consolidating into layers: <b>(1) frontier models</b> with native tool-use/computer-use + RLVR post-training; <b>(2) agent runtimes/frameworks</b> (LangGraph, OpenAI Agents SDK, MS Agent Framework, CrewAI, Pydantic AI…); <b>(3) interop protocols</b> — <b>MCP</b> (agent↔tools) + <b>A2A</b> (agent↔agent), with agentic-payment standards still fragmented; <b>(4) products</b> (coding agents, computer-use, vertical enterprise).</p>
+  <p>Key shifts since 2025: SWE-bench Verified is saturating (→ <b>SWE-bench Pro</b>, contamination-resistant); evals moving from one-shot to <b>pass^k reliability</b> (τ-bench); <b>computer-use (OSWorld)</b> and <b>long-horizon</b> autonomy remain the hard walls; <b>RLVR</b> is the dominant training recipe (with reward-hacking as the live failure mode); memory is moving from RAG-over-history to <b>agent-managed self-editing memory</b> (MemGPT/Letta, Mem0, A-MEM).</p>
+</div>
+
+<div class="toc">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#taxonomy">Taxonomy &amp; reference architecture</a></li>
+    <li><a href="#coding">Coding agents &amp; IDEs</a></li>
+    <li><a href="#frameworks">Frameworks, runtimes &amp; infra</a></li>
+    <li><a href="#products">Computer-use &amp; vertical agents</a></li>
+    <li><a href="#deepdive">Three deep dives (Cursor / Manus / Sierra)</a></li>
+    <li><a href="#compare">Technical comparison</a></li>
+    <li><a href="#protocols">Interop &amp; payment protocols</a></li>
+    <li><a href="#benchmarks">Benchmarks &amp; evals</a></li>
+    <li><a href="#research">Research frontier (incl. in-progress)</a></li>
+    <li><a href="#open">Open problems &amp; what to watch</a></li>
+  </ol>
+</div>
+
+<!-- ===== 1 TAXONOMY ===== -->
+<div class="section" id="taxonomy">
+  <h2>1 · Taxonomy &amp; reference architecture</h2>
+  <p class="intro">An "agentic" system = an LLM in a <b>perceive→plan→act→observe</b> loop with tools, memory, and some autonomy over control flow. Minimum viable agent: model + tool schema + loop + stop condition. Production systems add the layers below.</p>
+  <div class="card">
+    <div class="arch"><span class="c"># Reference layering (bottom → top)</span>
+[ Model ]      frontier LLM w/ tool-use, reasoning/extended-thinking, computer-use
+[ Harness ]    agent loop · context mgmt/compaction · planner · reflection · verifier
+[ Memory ]     short-term (context) + long-term (vector/graph) + self-editing (MemGPT)
+[ Tools ]      function-calling · code exec (E2B sandbox) · browser · file I/O · MCP servers
+[ Interop ]    MCP (agent↔tools) · A2A (agent↔agent) · AGNTCY (discovery/infra)
+[ Orchestr. ]  single-agent | orchestrator-worker | role-based multi-agent | swarm
+[ Eval/Obs ]   traces · benchmarks · pass^k reliability · LangSmith/Logfire/OTel</div>
+    <p style="margin-top:5px;"><b>Two orthogonal axes that matter most in practice:</b> (a) <i>autonomy granularity</i> — atomic tools the model composes freely vs. hard-coded workflows (the "agent-native" vs. pipeline debate); (b) <i>reliability surface</i> — guarantees must live in tool/harness code, not prompts (prompts are suggestions). Token cost scales ~linearly with autonomy: Anthropic reports multi-agent orchestration at ~15× single-agent tokens. <span class="conf m">M</span></p>
+  </div>
+</div>
+
+<!-- ===== 2 CODING ===== -->
+<div class="section" id="coding">
+  <h2>2 · Coding agents &amp; IDEs</h2>
+  <p class="intro">The most commercially mature category. Ranked by scale (valuation/ARR for closed; stars for OSS). Stars fetched 2026-05-26.</p>
+  <table>
+    <tr><th style="width:13%">Tool</th><th style="width:25%">Architecture / approach</th><th style="width:11%">GitHub ★</th><th style="width:20%">Scale</th><th style="width:16%">Pricing</th><th style="width:8%">OSS</th><th style="width:7%">Link</th></tr>
+    <tr><td><span class="nm">Cursor</span></td><td>VS Code fork; agent + background agents; custom retrieval/"context engine"</td><td>closed</td><td>~$29.3B¹ · ~$2B ARR</td><td>$0/$20/$60/$200</td><td><span class="pill closed">no</span></td><td><a href="https://cursor.com">site</a></td></tr>
+    <tr><td><span class="nm">Claude Code</span></td><td>Terminal harness; agentic file/test loop; Agent SDK; MCP-native</td><td>~127k</td><td>Anthropic ~$30B run-rate¹</td><td>Claude plans / API</td><td><span class="pill closed">proprietary</span></td><td><a href="https://github.com/anthropics/claude-code">repo</a></td></tr>
+    <tr><td><span class="nm">Devin</span> (Cognition)</td><td>Cloud autonomous SWE; planner + shell + browser + editor; ACU billing</td><td>closed</td><td>~$10.2B¹ · ~$73M ARR</td><td>$20 PAYG / $500 / ent</td><td><span class="pill closed">no</span></td><td><a href="https://devin.ai">site</a></td></tr>
+    <tr><td><span class="nm">Gemini CLI</span></td><td>Open terminal agent; ReAct loop; MCP; large free tier</td><td>~105k</td><td>Google-backed</td><td>Free / API</td><td><span class="pill open">Apache-2.0</span></td><td><a href="https://github.com/google-gemini/gemini-cli">repo</a></td></tr>
+    <tr><td><span class="nm">Codex</span> (OpenAI)</td><td>Terminal + cloud agent; Responses API; sandboxed exec</td><td>~86k</td><td>via ChatGPT</td><td>ChatGPT / API</td><td><span class="pill open">Apache-2.0</span></td><td><a href="https://github.com/openai/codex">repo</a></td></tr>
+    <tr><td><span class="nm">Zed</span></td><td>Rust editor; native agent panel; high-perf collab</td><td>~84k</td><td>VC-backed</td><td>Free + AI usage</td><td><span class="pill open">GPL/AGPL</span></td><td><a href="https://github.com/zed-industries/zed">repo</a></td></tr>
+    <tr><td><span class="nm">OpenHands</span></td><td>Agent + sandboxed runtime; CodeAct-style; SDK/CLI/GUI/cloud</td><td>~75k</td><td>~$24M raised</td><td>OSS + cloud</td><td><span class="pill open">MIT</span></td><td><a href="https://github.com/All-Hands-AI/OpenHands">repo</a></td></tr>
+    <tr><td><span class="nm">Cline</span></td><td>VS Code ext; Plan&amp;Act modes; BYO keys; MCP</td><td>~62k</td><td>high traction</td><td>BYO model</td><td><span class="pill open">Apache-2.0</span></td><td><a href="https://github.com/cline/cline">repo</a></td></tr>
+    <tr><td><span class="nm">Replit Agent</span></td><td>Cloud IDE; full app build/deploy; checkpoint billing</td><td>closed</td><td>~$9B · ~$150M ARR</td><td>$0/$20/$100</td><td><span class="pill closed">no</span></td><td><a href="https://replit.com">site</a></td></tr>
+    <tr><td><span class="nm">Aider</span></td><td>Terminal pair-programmer; git-aware diff/commit loop; repo map</td><td>~45k</td><td>indie</td><td>Free (your API)</td><td><span class="pill open">Apache-2.0</span></td><td><a href="https://github.com/Aider-AI/aider">repo</a></td></tr>
+    <tr><td><span class="nm">Windsurf</span> (Cognition)</td><td>Agentic IDE "Cascade"; acq. by Cognition Jul'25</td><td>closed</td><td>part of Cognition</td><td>$0/$20/$200</td><td><span class="pill closed">no</span></td><td><a href="https://windsurf.com">site</a></td></tr>
+    <tr><td><span class="nm">Factory</span></td><td>"Droids"; agent-native full SDLC; terminal + cloud</td><td>closed</td><td>~$1.5B</td><td>$0/$20/ent</td><td><span class="pill closed">no</span></td><td><a href="https://factory.ai">site</a></td></tr>
+  </table>
+  <p class="intro" style="font-size:8pt;"><b>Also:</b> Continue (~33k, OSS IDE assistant + CI review), Goose (~46k, Block, MCP-first local agent), Augment (closed, large-context enterprise), Amp (Sourcegraph), Tabnine (privacy/air-gapped). <b>Dead/archived:</b> Roo Code (archived May'26), Aide/CodeStory (archived Feb'25), OpenAI Swarm (deprecated → Agents SDK).</p>
+</div>
+
+<!-- ===== 3 FRAMEWORKS ===== -->
+<div class="section" id="frameworks">
+  <h2>3 · Frameworks, runtimes &amp; infra</h2>
+  <p class="intro">The build-your-own layer. Pattern: OSS library is free; revenue from hosted observability/eval (LangSmith, Logfire), managed runtime (LangGraph Platform, AgentOS, Vertex Agent Engine), or no-code cloud (Dify, n8n). Stars 2026-05-26.</p>
+  <table>
+    <tr><th style="width:13%">Project</th><th style="width:30%">What / primitives</th><th style="width:9%">★</th><th style="width:12%">License</th><th style="width:18%">Backing / size</th><th style="width:18%">Status note</th></tr>
+    <tr><td><span class="nm">LangChain/Graph</span></td><td>General framework; LangGraph = stateful graph orchestration</td><td>138k/33k</td><td>MIT</td><td>$1.25B val · ~90M dl/mo</td><td>de-facto standard</td></tr>
+    <tr><td><span class="nm">Dify</span></td><td>Visual agentic-workflow platform</td><td>143k</td><td>Apache*</td><td>~$180M val</td><td>strong self-host</td></tr>
+    <tr><td><span class="nm">n8n</span></td><td>Workflow automation + native AI nodes</td><td>190k</td><td>fair-code</td><td>$2.5B val</td><td>not OSI-OSS</td></tr>
+    <tr><td><span class="nm">CrewAI</span></td><td>Role-based multi-agent "crews"; tasks/process</td><td>52k</td><td>MIT</td><td>~$18M raised</td><td>popular for multi-agent</td></tr>
+    <tr><td><span class="nm">MS Agent Framework</span></td><td>Unified successor merging AutoGen + Semantic Kernel</td><td>11k</td><td>MIT</td><td>Microsoft</td><td><b>1.0 GA ~Apr'26</b></td></tr>
+    <tr><td><span class="nm">AutoGen</span></td><td>Multi-agent conversation; Magentic-One</td><td>58k</td><td>MIT</td><td>Microsoft</td><td><b>maintenance only</b></td></tr>
+    <tr><td><span class="nm">Semantic Kernel</span></td><td>Plugins/planners (.NET-first)</td><td>28k</td><td>MIT</td><td>Microsoft</td><td><b>maintenance only</b></td></tr>
+    <tr><td><span class="nm">OpenAI Agents SDK</span></td><td>Agents/Handoffs/Guardrails/Sessions on Responses API</td><td>27k</td><td>MIT</td><td>OpenAI</td><td>prod successor to Swarm</td></tr>
+    <tr><td><span class="nm">LlamaIndex</span></td><td>RAG/knowledge agents; LlamaParse</td><td>50k</td><td>MIT</td><td>~$27.5M raised</td><td>RAG-centric</td></tr>
+    <tr><td><span class="nm">Pydantic AI</span></td><td>Type-safe agents; structured outputs; Logfire</td><td>17k</td><td>MIT</td><td>Pydantic/Sequoia</td><td>strong typing</td></tr>
+    <tr><td><span class="nm">Google ADK</span></td><td>Code-first multi-lang agent toolkit; Vertex Agent Engine</td><td>20k</td><td>Apache-2.0</td><td>Google Cloud</td><td>A2A-aligned</td></tr>
+    <tr><td><span class="nm">Smolagents</span></td><td>CodeAgent (agents that "think in code")</td><td>28k</td><td>Apache-2.0</td><td>HuggingFace</td><td>minimalist</td></tr>
+    <tr><td><span class="nm">Vercel AI SDK</span></td><td>TS toolkit; streaming/tool-use; ~20M dl/mo</td><td>25k</td><td>Apache-2.0</td><td>Vercel $9.3B</td><td>TS standard</td></tr>
+    <tr><td><span class="nm">Mastra</span></td><td>TS agent framework (ex-Gatsby team)</td><td>24k</td><td>Apache-2.0</td><td>$13M seed</td><td>rising TS option</td></tr>
+    <tr><td><span class="nm">Letta</span> (MemGPT)</td><td>Stateful agents w/ self-editing tiered memory</td><td>23k</td><td>Apache-2.0</td><td>$10M seed</td><td>memory leader</td></tr>
+    <tr><td><span class="nm">Agno</span> (Phidata)</td><td>High-perf agents + AgentOS runtime</td><td>40k</td><td>MPL-2.0*</td><td>—</td><td>perf-focused</td></tr>
+    <tr><td><span class="nm">Composio</span></td><td>1000+ tool/auth layer; tool search</td><td>29k</td><td>OSS core*</td><td>~$80M raised</td><td>integration layer</td></tr>
+    <tr><td><span class="nm">E2B</span></td><td>Secure code-exec sandboxes for agents</td><td>12k</td><td>Apache-2.0</td><td>$32M raised</td><td>runtime infra</td></tr>
+  </table>
+  <p class="intro" style="font-size:8pt;">Also: Haystack (25k, deepset, prod RAG), CAMEL/OWL (17k/20k, multi-agent research + GAIA), SuperAGI (17k). <span style="color:#999">* license has commercial conditions — verify before redistribution.</span></p>
+</div>
+
+<!-- ===== 4 PRODUCTS ===== -->
+<div class="section" id="products">
+  <h2>4 · Computer-use &amp; vertical agents</h2>
+  <h3 class="sub">Computer/browser use</h3>
+  <table>
+    <tr><th style="width:15%">Product</th><th style="width:38%">Approach</th><th style="width:17%">OSS / scale</th><th style="width:18%">Pricing</th><th style="width:12%">Link</th></tr>
+    <tr><td><span class="nm">OpenAI ChatGPT Agent</span></td><td>Virtual-computer agent (absorbed Operator/CUA); vision + RL on GUIs</td><td>closed</td><td>ChatGPT Plus/Pro; API CUA $3/$12 per 1M</td><td><a href="https://openai.com">site</a></td></tr>
+    <tr><td><span class="nm">Anthropic computer use</span></td><td>Screenshot-driven GUI control tool in API; strongest coding models</td><td>closed</td><td>API per-token; Pro/Max</td><td><a href="https://claude.com">site</a></td></tr>
+    <tr><td><span class="nm">Google Project Mariner</span></td><td>Gemini Chrome agent; ~10 parallel tasks; computer-use in Gemini API</td><td>closed</td><td>AI Ultra $249.99/mo</td><td><a href="https://deepmind.google">site</a></td></tr>
+    <tr><td><span class="nm">Browser Use</span></td><td>OSS framework to drive browsers (DOM + vision); used at Anthropic/Amazon</td><td><span class="pill open">MIT ~96k★</span></td><td>OSS + cloud API</td><td><a href="https://github.com/browser-use/browser-use">repo</a></td></tr>
+    <tr><td><span class="nm">Skyvern</span></td><td>OSS vision+LLM RPA; selector-free web automation</td><td><span class="pill open">AGPL ~22k★</span></td><td>OSS + cloud</td><td><a href="https://github.com/Skyvern-AI/skyvern">repo</a></td></tr>
+  </table>
+  <h3 class="sub">Vertical enterprise (where the revenue concentrates)</h3>
+  <table>
+    <tr><th style="width:13%">Company</th><th style="width:13%">Domain</th><th style="width:30%">What the agent does</th><th style="width:22%">Scale</th><th style="width:14%">Pricing</th><th style="width:8%">Link</th></tr>
+    <tr><td><span class="nm">Sierra</span></td><td>CX</td><td>End-to-end customer-service resolution agents</td><td>~$15B · ~$150M ARR</td><td><b>outcome-based</b></td><td><a href="https://sierra.ai">site</a></td></tr>
+    <tr><td><span class="nm">Harvey</span></td><td>Legal</td><td>Contract/research/diligence agents</td><td>~$11B · ~$190M ARR</td><td>seat/enterprise</td><td><a href="https://harvey.ai">site</a></td></tr>
+    <tr><td><span class="nm">Glean</span></td><td>Enterprise search</td><td>Search + cross-app action agents</td><td>~$7.2B · ~$200M ARR</td><td>seat + usage</td><td><a href="https://glean.com">site</a></td></tr>
+    <tr><td><span class="nm">Decagon</span></td><td>CX</td><td>Concierge support agents</td><td>~$4.5B · ~$35M ARR</td><td>outcome/usage</td><td><a href="https://decagon.ai">site</a></td></tr>
+    <tr><td><span class="nm">Hebbia</span></td><td>Finance/legal</td><td>Multi-agent doc analysis (Matrix)</td><td>~$700M (funding stale)</td><td>enterprise</td><td><a href="https://hebbia.ai">site</a></td></tr>
+    <tr><td><span class="nm">Manus</span></td><td>General</td><td>Autonomous general agent on a virtual computer</td><td>reported Meta acq. $2B+¹</td><td>credits</td><td><a href="https://manus.im">site</a></td></tr>
+  </table>
+</div>
+
+<!-- ===== 5 DEEP DIVES ===== -->
+<div class="section amber" id="deepdive">
+  <h2>5 · Three deep dives</h2>
+
+  <div class="card">
+    <h3>Cursor (Anysphere) — retrieval-first agentic IDE</h3>
+    <div class="tagline">closed-source · VS Code fork · ~$2B ARR · ~$29.3B¹</div>
+    <p><b>Technical thesis:</b> the bottleneck for code agents is <i>context selection</i>, not raw model quality. Cursor's moat is a proprietary <b>codebase indexing/retrieval ("context engine")</b> + tight editor integration + <b>background agents</b> (async, parallel, cloud-executed tasks). Model-agnostic: routes across frontier models (Anthropic/OpenAI/its own fine-tunes) and applies edits via fast "apply" models.</p>
+    <ul>
+      <li><b>Loop:</b> retrieve relevant context → propose multi-file diff → user/agent applies → run/iterate. Agent mode plans across files; background agents run headless.</li>
+      <li><b>Why it won:</b> latency + UX on a daily workflow; "Tab" completion + agent in one surface. Fastest-ever B2B $0→$2B ARR.</li>
+      <li><b>Risk:</b> sits atop frontier-lab models that now ship their own agents (Claude Code, Codex) — margin/differentiation pressure.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Manus (Butterfly Effect / Monica) — general agent on a virtual computer</h3>
+    <div class="tagline">closed-source · China · ~$100M ARR in ~8mo · reported Meta acq. $2B+¹ <span class="conf l">L</span></div>
+    <p><b>Technical thesis:</b> wrap frontier models (reportedly Claude + Qwen-class) in a <b>persistent cloud VM</b> with shell, browser, file system, and a planning/"todo" loop, then let the agent run long-horizon tasks asynchronously to a finished deliverable. Emphasizes <b>transparent execution</b> ("Manus's Computer" view) and a context-engineering approach to long trajectories (KV-cache-friendly prompts, file-system-as-memory, recitation of goals to combat drift).</p>
+    <ul>
+      <li><b>Self-reported GAIA</b> (Manus 1.5): ~86% L1 / ~70% L2 / ~58% L3 <span class="conf l">L</span> — treat as marketing until third-party-verified.</li>
+      <li><b>Significance:</b> productized the "do the whole job" long-horizon pattern; proof a breakout agent can ship from anywhere and scale in months.</li>
+      <li><b>Risk:</b> generalist agents face reliability/cost vs. focused agents; the Meta acquisition price is press-reported, not confirmed.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Sierra (Bret Taylor) — outcome-priced enterprise CX agents</h3>
+    <div class="tagline">closed-source · ~$15B · ~$150M ARR · outcome-based pricing</div>
+    <p><b>Technical thesis:</b> reliability + governance are the product, not the model. Sierra wraps models in a <b>guardrailed, policy-constrained agent</b> with deterministic tool integrations (CRM, order systems), supervisory checks, and per-customer evals. Co-developed <b>τ-bench / τ²-bench</b> (Sierra Research) to measure exactly the thing enterprises care about: <b>multi-turn reliability and policy adherence under pass^k</b>.</p>
+    <ul>
+      <li><b>Pricing innovation:</b> charges largely <b>per resolved outcome</b> — only viable because the agent does verifiable end-to-end work; aligns vendor incentive with task success.</li>
+      <li><b>Significance:</b> sets the template for vertical agents (reliability eng + outcome pricing + domain integrations) and contributes real eval methodology back to the field.</li>
+      <li><b>Risk:</b> outcome attribution/guarantees are hard; long enterprise sales cycles; incumbents (Salesforce Agentforce) competing.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== 6 COMPARE ===== -->
+<div class="section" id="compare">
+  <h2>6 · Technical comparison</h2>
+  <table>
+    <tr><th style="width:17%">Axis</th><th style="width:28%">Cursor</th><th style="width:28%">Manus</th><th style="width:27%">Sierra</th></tr>
+    <tr><td class="nm">Agent topology</td><td>Single-agent + async background agents</td><td>Single long-horizon agent on a VM (+ sub-tasks)</td><td>Guardrailed single-agent + supervisory checks</td></tr>
+    <tr><td class="nm">Core moat</td><td>Codebase retrieval + editor UX + apply models</td><td>Long-horizon context engineering + VM tooling</td><td>Reliability/governance + domain integrations</td></tr>
+    <tr><td class="nm">Model strategy</td><td>Multi-model router + own fine-tunes</td><td>Wraps frontier models (Claude/Qwen-class)</td><td>Model-agnostic; policy layer on top</td></tr>
+    <tr><td class="nm">Reliability approach</td><td>Human-in-loop diff review; run tests</td><td>Self-verification, recitation, file memory</td><td>Guardrails + evals (τ-bench) + pass^k</td></tr>
+    <tr><td class="nm">Pricing</td><td>Flat subscription tiers</td><td>Subscription + usage credits</td><td>Per-resolution (outcome-based)</td></tr>
+    <tr><td class="nm">Eval exposure</td><td>SWE-bench-class (coding)</td><td>GAIA (self-reported)</td><td>τ-bench (authored)</td></tr>
+    <tr><td class="nm">Failure mode</td><td>Context miss → wrong edit</td><td>Long-horizon drift / cost blowup</td><td>Outcome misattribution / policy gaps</td></tr>
+  </table>
+  <p class="intro" style="margin-top:7px;">Pattern: differentiation has moved <b>above the model</b> — into retrieval (Cursor), long-horizon context engineering (Manus), and reliability/governance + pricing (Sierra). All three treat the frontier model as a swappable component.</p>
+</div>
+
+<!-- ===== 7 PROTOCOLS ===== -->
+<div class="section amber" id="protocols">
+  <h2>7 · Interop &amp; payment protocols</h2>
+  <h3 class="sub">MCP — Model Context Protocol (Anthropic, community-governed)</h3>
+  <p class="intro">JSON-RPC 2.0; roles <b>Host / Client / Server</b>; servers expose <b>Resources, Prompts, Tools</b>; clients expose <b>Sampling, Roots, Elicitation</b>. Stateful w/ capability negotiation (modeled on LSP). Ratified spec <code>2025-11-25</code> <span class="conf h">H</span>. RC in progress: stateless core, <b>Extensions</b>, <b>Tasks</b> (async long-running), <b>MCP Apps</b> (UI), OAuth 2.1 auth hardening <span class="conf m">M</span>. Public server registry growing; verified/security-rated registry on 2026 roadmap. De-facto "tool port" for agents (OpenAI/Google interop). <a href="https://modelcontextprotocol.io/specification/2025-11-25">spec</a></p>
+  <h3 class="sub">A2A — Agent2Agent (Google → Linux Foundation, Jun 2025)</h3>
+  <p class="intro">Agent↔agent (peer), complementary to MCP. Primitives: <b>Agent Cards</b> (capability discovery), <b>Tasks</b>, transport over HTTP + SSE + JSON-RPC. Opaque-agent interop without exposing internal state. 100+ supporters; vendor-neutral under LF. <span class="conf h">H</span> The emerging two-layer stack = <b>MCP (tools) + A2A (agents)</b>. <a href="https://a2a-protocol.org">a2a-protocol.org</a></p>
+  <h3 class="sub">AGNTCY / "Internet of Agents" (Cisco + LangChain + Galileo → LF)</h3>
+  <p class="intro">Broader infra stack: discovery, composition, deployment, eval; OASF agent manifest/directory. 65+ companies; LF governance. Overlaps/competes with A2A at the infra layer. <a href="https://agntcy.org">agntcy.org</a></p>
+  <h3 class="sub">Agentic payments (fragmented — no winner)</h3>
+  <p class="intro">Open problems: delegated authorization, scoped consent, agent identity/attestation, dispute/liability. Contenders: <b>AP2</b> (Google, signed mandates/verifiable credentials, 60+ partners incl. Mastercard/PayPal/Coinbase), <b>x402</b> (Coinbase, HTTP-402 stablecoin micropayments for M2M), <b>Visa TAP</b> (agent identity in HTTP headers), <b>Mastercard Agent Pay</b> (tokenized agentic credentials), <b>ACP</b> (OpenAI/Stripe in-ChatGPT checkout). All <span class="conf m">M</span>/<span class="conf l">L</span> on adoption specifics.</p>
+</div>
+
+<!-- ===== 8 BENCHMARKS ===== -->
+<div class="section" id="benchmarks">
+  <h2>8 · Benchmarks &amp; evals</h2>
+  <div class="note"><b>Scores move weekly and secondary sources conflict.</b> Treat specific top-line % as snapshots; several "leaderboard" pages with future-dated model names and round scores appear auto-generated and unreliable. Confidence flagged per item.</div>
+  <table>
+    <tr><th style="width:16%">Benchmark</th><th style="width:42%">Measures</th><th style="width:30%">Notes / state</th><th style="width:12%">Ref</th></tr>
+    <tr><td><span class="nm">SWE-bench (Verified)</span></td><td>Resolve real GitHub issues; patch must pass repo tests; 500 human-validated</td><td>Headline coding bench; ~70s–80s% SOTA, <b>saturating</b> <span class="conf m">M</span></td><td><a href="https://www.swebench.com">2310.06770</a></td></tr>
+    <tr><td><span class="nm">SWE-bench Pro</span></td><td>Harder, contamination-resistant, longer-horizon SWE</td><td>~80%-Verified models drop to <b>~mid-40s%</b> <span class="conf m">M</span></td><td><a href="https://arxiv.org/abs/2509.16941">2509.16941</a></td></tr>
+    <tr><td><span class="nm">SWE-Lancer</span></td><td>1,400 real Upwork tasks, $1M payout; incl. managerial</td><td>Frontier earns a fraction of $1M <span class="conf m">M</span></td><td><a href="https://arxiv.org/abs/2502.12115">2502.12115</a></td></tr>
+    <tr><td><span class="nm">GAIA</span></td><td>466 real-world reasoning+multimodal+web+tools, 3 levels</td><td>Release gap humans ~92% vs GPT-4+plugins ~15% <span class="conf h">H</span></td><td><a href="https://arxiv.org/abs/2311.12983">2311.12983</a></td></tr>
+    <tr><td><span class="nm">τ-bench / τ²/τ³</span></td><td>Tool-Agent-User CX dialogues; policy adherence; <b>pass^k</b></td><td>Sierra; surfaces multi-turn reliability gap <span class="conf h">H</span></td><td><a href="https://arxiv.org/abs/2406.12045">2406.12045</a></td></tr>
+    <tr><td><span class="nm">TheAgentCompany</span></td><td>Simulated software co.; multi-role professional tasks</td><td>Frontier completes a minority end-to-end <span class="conf h">H</span></td><td><a href="https://arxiv.org/abs/2412.14161">2412.14161</a></td></tr>
+    <tr><td><span class="nm">OSWorld</span></td><td>369 real OS tasks (Ubuntu/Win/macOS); execution-based</td><td>Canonical <b>computer-use</b> wall; release humans ~72% vs ~12% <span class="conf h">H</span></td><td><a href="https://arxiv.org/abs/2404.07972">2404.07972</a></td></tr>
+    <tr><td><span class="nm">WebArena / VWA</span></td><td>Self-hosted web apps; multi-step browser tasks (+visual)</td><td>SOTA rising but &lt;human; top numbers <span class="conf l">L</span></td><td><a href="https://arxiv.org/abs/2307.13854">2307.13854</a></td></tr>
+    <tr><td><span class="nm">BrowseComp</span></td><td>1,266 hard-to-find-fact deep-browsing tasks</td><td>Targets deep-research agents <span class="conf h">H</span></td><td>OpenAI '25</td></tr>
+    <tr><td><span class="nm">Terminal-Bench 2.0</span></td><td>End-to-end terminal/computer tasks (build/train/serve)</td><td>Hard long-horizon, verifiable <span class="conf m">M</span></td><td><a href="https://www.tbench.ai">tbench.ai</a></td></tr>
+    <tr><td><span class="nm">Cybench</span></td><td>40 CTF tasks; agentic offensive-cyber; unguided success</td><td>Used in RSP/dangerous-capability evals <span class="conf m">M</span></td><td><a href="https://arxiv.org/abs/2408.08926">2408.08926</a></td></tr>
+  </table>
+</div>
+
+<!-- ===== 9 RESEARCH ===== -->
+<div class="section amber" id="research">
+  <h2>9 · Research frontier (incl. in-progress)</h2>
+  <h3 class="sub">Memory</h3>
+  <p class="intro"><b>MemGPT/Letta</b> (2310.08560) — "LLM as OS": virtual context mgmt, tiered memory, self-editing via function calls. <b>Mem0</b> (2504.19413) — extraction→consolidation→retrieval; benchmarked on LoCoMo. <b>A-MEM</b> (2502.12110) — Zettelkasten-style interconnected evolving notes; gains on multi-hop. Direction: RAG-over-history → <b>agent-managed self-evolving memory</b>; eval still immature. <span class="conf h">H</span></p>
+  <h3 class="sub">Self-improvement / open-ended</h3>
+  <p class="intro"><b>Reflexion</b> (2303.11366) — verbal RL: reflect on failures into episodic memory (no weight updates). <b>Voyager</b> (2305.16291) — open-ended Minecraft agent w/ automatic curriculum + <b>executable skill library</b> + self-verification; foundational for lifelong-learning/skill-library agents. <span class="conf h">H</span></p>
+  <h3 class="sub">RL for agents (RLVR, verifiers, test-time compute)</h3>
+  <p class="intro"><b>RLVR</b> (RL w/ Verifiable Rewards) is the dominant post-training recipe — reward from programmatic checks (tests/math/format). Canonical: DeepSeek-R1 GRPO rule-based rewards; OpenAI o-series "scale RL + tool use." Live failure mode: <b>reward hacking / verifier gaming</b>. Unifying reasoners+verifiers for test-time scaling (2505.04842); contrarian result that RLVR sharpens sampling more than it adds capability (2506.14245). <span class="conf h">H</span> on these IDs; 2026-dated IDs from search <span class="conf l">L</span> — verify before citing.</p>
+  <h3 class="sub">Multi-agent orchestration &amp; long-horizon</h3>
+  <p class="intro"><b>Anthropic multi-agent research system</b>: orchestrator-worker; lead decomposes → parallel subagents (explicit objective/format/tools) → synthesize. +90.2% vs single-agent on internal evals at ~15× tokens; token usage explained ~80% of variance. Heuristics: 1 agent fact-find, 2–4 compare, 10+ complex. <span class="conf m">M</span> Long-horizon autonomy (error compounding, credit assignment, trajectory repair) remains the central open problem.</p>
+  <h3 class="sub">Computer-use models &amp; world models</h3>
+  <p class="intro">Distinct model class: vision + GUI grounding + RL on UI (OpenAI CUA, Anthropic computer-use, Gemini computer-use). OSWorld is the proving ground; grounding is the bottleneck. <b>World models for agents</b> (Genie-line / learned simulators, DeepMind) — sample-efficient training/planning, research-stage.</p>
+  <h3 class="sub">Frontier products &amp; autonomous science</h3>
+  <p class="intro">OpenAI (ChatGPT agent absorbing Operator/CUA; o-series + GPT-5.x for agentic coding/computer-use), Anthropic (Claude Code + Agent SDK + MCP; computer-use), Google DeepMind (Project Mariner ~10 parallel tasks; Project Astra real-time multimodal assistant). <b>Sakana "AI Scientist" v2</b> (2504.08066) — agentic tree-search research pipeline; produced the first AI-generated manuscript to pass workshop peer review at ICLR 2025 (avg 6.33) — heavily caveated: hallucinations/overstated novelty (critical eval 2502.14297). <span class="conf m">M</span></p>
+  <h3 class="sub">OSS research-grade repos</h3>
+  <p class="intro">AutoGPT (~185k), OpenHands (~75k), OpenManus (~56k), SWE-agent (~19k; introduced the Agent-Computer Interface; mini-swe-agent variant), Voyager (ref impl), Letta (~23k).</p>
+</div>
+
+<!-- ===== 10 OPEN PROBLEMS ===== -->
+<div class="section" id="open">
+  <h2>10 · Open problems &amp; what to watch</h2>
+  <div class="card" style="border-left:4px solid #0b3d2e;">
+    <ul>
+      <li><b>Long-horizon reliability</b> — error compounds over long trajectories; credit assignment and mid-run trajectory repair are unsolved. The real moat is reliability eng, not model access.</li>
+      <li><b>Computer-use grounding</b> — OSWorld shows GUI grounding + operational knowledge is far from solved; biggest near-term capability unlock.</li>
+      <li><b>Eval integrity</b> — Verified saturation/contamination → Pro + pass^k + contamination-resistant suites. Don't trust single-number leaderboards; measure pass^k on <i>your</i> task.</li>
+      <li><b>RLVR reward hacking</b> — verifier gaming is the dominant failure of the dominant training recipe; verifier design is becoming its own discipline.</li>
+      <li><b>Interop &amp; identity</b> — MCP+A2A converging fast; agent identity, scoped consent, and payments are the unsettled frontier (AP2/x402/TAP).</li>
+      <li><b>Cost of autonomy</b> — multi-agent ~15× tokens; orchestration topology is a cost/quality dial, not a free lunch.</li>
+      <li><b>Memory</b> — self-editing/evolving memory is promising but under-evaluated; LoCoMo-class benchmarks are early.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  <h3>Sources, dates &amp; confidence</h3>
+  <p>Compiled 2026-05-26. GitHub stars fetched live this week (popularity, not usage). Private valuations/ARR are point-in-time from press (TechCrunch/CNBC/Bloomberg/VentureBeat) and company posts; <b>¹ = reported/in-talks, not confirmed</b> (Cursor ~$29.3B & rumored ~$50B; Cognition ~$10.2B & rumored ~$25B; Manus Meta acquisition $2B+). Benchmark percentages are snapshots and move weekly; specific future-dated leaderboard scores were treated as unreliable and not asserted. arXiv IDs verified against arxiv.org except where flagged <span class="conf l">L</span>.</p>
+  <p class="refs"><b>Key refs:</b> MCP <a href="https://modelcontextprotocol.io/specification/2025-11-25">spec 2025-11-25</a> · A2A <a href="https://a2a-protocol.org">a2a-protocol.org</a> · AGNTCY <a href="https://agntcy.org">agntcy.org</a> · Anthropic multi-agent <a href="https://www.anthropic.com/engineering/multi-agent-research-system">engineering blog</a> · SWE-bench <a href="https://www.swebench.com">swebench.com</a> · OSWorld <a href="https://os-world.github.io">os-world.github.io</a> · τ²-bench <a href="https://github.com/sierra-research/tau2-bench">github</a> · MemGPT 2310.08560 · Mem0 2504.19413 · A-MEM 2502.12110 · Reflexion 2303.11366 · Voyager 2305.16291 · Sakana AI Scientist v2 2504.08066. Companion <b>Overview Edition</b> covers the same landscape for non-engineers.</p>
+</div>
+
+</body>
+</html>

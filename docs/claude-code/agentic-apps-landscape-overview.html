@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Agentic App Landscape — Overview Edition (for AI-savvy non-devs)</title>
+<style>
+  @page { size: A4; margin: 13mm 13mm 12mm 13mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color: #1f1f1f; font-size: 9.6pt; line-height: 1.42;
+  }
+  a { color: #0b3d2e; text-decoration: none; border-bottom: 0.5px solid #b9cfc6; }
+  h1,h2,h3 { letter-spacing: -0.2px; }
+
+  .hdr { border-bottom: 3px solid #0b3d2e; padding-bottom: 9px; margin-bottom: 13px; }
+  .hdr .kicker { font-size: 8pt; text-transform: uppercase; letter-spacing: 1.3px; color: #a14d00; font-weight: 700; margin-bottom: 4px; }
+  .hdr h1 { font-size: 20pt; margin: 0 0 5px 0; color: #0b3d2e; line-height: 1.12; }
+  .hdr .sub { font-size: 9.6pt; color: #555; margin: 0; }
+  .hdr .meta { font-size: 7.8pt; color: #888; margin-top: 6px; }
+
+  .startbox { background: #f0ece5; border: 1px solid #d9cdba; border-left: 5px solid #a14d00; border-radius: 6px; padding: 10px 13px; margin-bottom: 14px; break-inside: avoid; }
+  .startbox h2 { font-size: 11.5pt; color: #a14d00; margin: 0 0 5px 0; }
+  .startbox p { margin: 0 0 5px 0; font-size: 9.2pt; }
+  .startbox ul { margin: 3px 0 0 0; padding-left: 17px; }
+  .startbox li { font-size: 9.2pt; margin-bottom: 2px; }
+
+  .badge { display: inline-block; font-size: 6.6pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 1px 6px; border-radius: 10px; vertical-align: 1.5px; color: white; }
+  .b-pm { background: #0b7a55; } .b-tech { background: #6b6b6b; } .b-try { background: #a14d00; }
+  .legend { font-size: 7.8pt; color: #666; margin: 9px 0 4px 0; }
+
+  .toc { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 6px; padding: 9px 13px; margin-bottom: 16px; break-inside: avoid; }
+  .toc h2 { font-size: 10.5pt; color: #0b3d2e; margin: 0 0 5px 0; }
+  .toc ol { margin: 0; padding-left: 19px; }
+  .toc li { font-size: 9.2pt; margin-bottom: 2px; }
+  .toc a { border-bottom: none; } .toc .desc { color: #888; font-size: 8.2pt; }
+
+  .section { margin-top: 18px; }
+  .section > h2 { font-size: 13pt; color: white; background: #0b3d2e; margin: 0 0 9px 0; padding: 5px 11px; border-radius: 5px; }
+  .section.amber > h2 { background: #a14d00; }
+  .section .intro { font-size: 9.2pt; color: #444; margin: 0 0 10px 0; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 8.1pt; margin-bottom: 5px; }
+  th { background: #0b3d2e; color: white; text-align: left; padding: 4px 6px; font-size: 7.8pt; }
+  td { padding: 4px 6px; border-bottom: 1px solid #e6e6e6; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+  td .nm { font-weight: 700; color: #0b3d2e; }
+  td .cat { font-size: 6.8pt; color: #999; text-transform: uppercase; letter-spacing: 0.3px; }
+  td a { word-break: break-all; }
+  .rank { font-weight: 700; color: #a14d00; text-align: center; }
+  .pill { display: inline-block; font-size: 6.4pt; font-weight: 700; padding: 0 5px; border-radius: 8px; color: white; white-space: nowrap; }
+  .pill.open { background: #0b7a55; } .pill.closed { background: #999; }
+
+  .card { border: 1px solid #e2e2e2; border-radius: 6px; padding: 9px 12px; margin-bottom: 9px; break-inside: avoid; }
+  .card h3 { font-size: 11pt; margin: 0 0 1px 0; color: #0b3d2e; }
+  .card .tagline { font-size: 8pt; color: #999; margin: 0 0 5px 0; }
+  .card p { margin: 0 0 5px 0; font-size: 9.1pt; }
+  .card .stat { display: inline-block; background: #eef5f1; border-radius: 4px; padding: 1px 7px; font-size: 8pt; margin: 0 3px 3px 0; }
+  .card .stat b { color: #0b7a55; }
+  .card .why { background: #faf2e6; border-left: 3px solid #a14d00; padding: 4px 8px; border-radius: 0 4px 4px 0; font-size: 8.9pt; }
+  .card .why b { color: #a14d00; }
+
+  code { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: 8pt; background: #ececec; padding: 0 3px; border-radius: 3px; }
+  .footer { margin-top: 18px; border-top: 1px solid #d4d4d4; padding-top: 7px; font-size: 7.6pt; color: #777; }
+  .footer h3 { font-size: 8.6pt; color: #0b3d2e; margin: 0 0 3px 0; }
+  .footer p { margin: 0 0 4px 0; }
+  .footer a { color: #0b3d2e; }
+  .pagebreak { break-before: page; }
+  .fn { font-size: 7pt; color: #999; vertical-align: 3px; }
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="kicker">Atram · Agentic App Landscape · Overview Edition</div>
+  <h1>Who's Building Agentic Apps — and How</h1>
+  <p class="sub">A plain-language map of the companies and tools building software that gives users freedom through AI agents, ranked by scale, with three standout projects examined up close. Written for people who know AI but don't write code.</p>
+  <p class="meta">Compiled 2026-05-26 · Figures gathered from company sites, press, and live GitHub counts · Numbers move fast and several are "reported / in talks" — see footnotes &amp; sources.</p>
+</div>
+
+<div class="startbox">
+  <h2>★ Start here — the 60-second version</h2>
+  <p>"Agentic apps" are tools where an AI <i>does multi-step work on your behalf</i> — not just answering, but acting: writing & running code, browsing the web, resolving support tickets, organizing files. The market split into four buckets:</p>
+  <ul>
+    <li><b>Coding agents</b> — the biggest commercial winners so far (Cursor, Devin, Replit, Claude Code).</li>
+    <li><b>Build-your-own frameworks</b> — open-source toolkits devs use to assemble agents (LangChain, CrewAI, n8n, Dify).</li>
+    <li><b>Computer/browser-use agents</b> — AI that drives a real screen (ChatGPT Agent, Manus, Browser Use).</li>
+    <li><b>Vertical enterprise agents</b> — agents sold to a specific industry, where the real money is (Sierra=support, Harvey=legal, Glean=search).</li>
+  </ul>
+  <p>If you read nothing else, jump to <a href="#top3">the three standouts</a>: <b>Cursor</b> (fastest-growing software company ever), <b>Manus</b> (the surprise viral "general agent"), and <b>Sierra</b> (agents that only get paid when they solve your problem).</p>
+</div>
+
+<div class="legend"><b>Open-source badge:</b> <span class="pill open">OPEN</span> code is public & free to run · <span class="pill closed">CLOSED</span> proprietary SaaS. <b>Footnote <span class="fn">¹</span></b> = number is reported/in-talks, not officially confirmed.</div>
+
+<div class="toc">
+  <h2>What's inside</h2>
+  <ol>
+    <li><a href="#companies">The big players, ranked by scale</a> <span class="desc">— commercial agentic-app companies by valuation / revenue / users</span></li>
+    <li><a href="#oss">The open-source toolkits, ranked by traction</a> <span class="desc">— what builders actually use, by GitHub stars</span></li>
+    <li><a href="#top3">Three standouts up close</a> <span class="desc">— Cursor, Manus, Sierra</span></li>
+    <li><a href="#compare">Head-to-head comparison</a> <span class="desc">— what each one teaches us</span></li>
+    <li><a href="#takeaways">What it means for Atram</a></li>
+  </ol>
+</div>
+
+<!-- ============ SECTION 1: COMPANIES ============ -->
+<div class="section" id="companies">
+  <h2>1 · The big players, ranked by scale</h2>
+  <p class="intro">These are the funded companies building agentic products, ordered roughly by company value (with revenue and user signals alongside). Valuations for private companies are point-in-time and several recent ones are still "reported." Treat the order as a tier guide, not a precise league table.</p>
+
+  <table>
+    <tr><th style="width:4%">#</th><th style="width:17%">Company / Product</th><th style="width:26%">What its agent does</th><th style="width:24%">Scale (value · revenue · users)</th><th style="width:17%">Pricing</th><th style="width:6%">Code</th><th style="width:6%">Link</th></tr>
+    <tr><td class="rank">1</td><td><span class="nm">Cursor</span> <span class="cat">Coding</span></td><td>AI code editor that plans & edits across your whole project, runs background agents.</td><td>~$29.3B<span class="fn">¹</span> valuation · ~$2B ARR · fastest to $2B ever</td><td>Free / $20 / $60 / $200 mo</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://cursor.com">cursor.com</a></td></tr>
+    <tr><td class="rank">2</td><td><span class="nm">Perplexity</span> <span class="cat">Search / browser</span></td><td>AI answer engine + "Comet" agentic browser that does tasks while you read.</td><td>~$20B valuation · ~$200M ARR · ~45M monthly users</td><td>Free / Pro $20 / Max $200</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://perplexity.ai">perplexity.ai</a></td></tr>
+    <tr><td class="rank">3</td><td><span class="nm">Sierra</span> <span class="cat">Enterprise · CX</span></td><td>Customer-service agents that resolve tickets end-to-end. (Bret Taylor's company.)</td><td>~$15B valuation · ~$150M ARR · 40%+ of Fortune 50</td><td>Pay-per-resolution (outcome-based)</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://sierra.ai">sierra.ai</a></td></tr>
+    <tr><td class="rank">4</td><td><span class="nm">Harvey</span> <span class="cat">Enterprise · Legal</span></td><td>Legal AI agents for contracts, research, diligence at law firms.</td><td>~$11B valuation · ~$190M ARR · 100k+ lawyers</td><td>Enterprise / per-seat</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://harvey.ai">harvey.ai</a></td></tr>
+    <tr><td class="rank">5</td><td><span class="nm">Notion</span> <span class="cat">Productivity</span></td><td>Custom AI agents that run tasks inside your workspace docs & databases.</td><td>~$11B valuation · ~$600M ARR</td><td>$20/user + agent credits</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://notion.so">notion.so</a></td></tr>
+    <tr><td class="rank">6</td><td><span class="nm">Cognition</span> (Devin + Windsurf) <span class="cat">Coding</span></td><td>"Devin," an autonomous software-engineer agent; also owns the Windsurf IDE.</td><td>~$10.2B<span class="fn">¹</span> (talks of ~$25B<span class="fn">¹</span>) · Devin ~$73M ARR</td><td>$20 / $500 / mo + enterprise</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://devin.ai">devin.ai</a></td></tr>
+    <tr><td class="rank">7</td><td><span class="nm">Replit</span> <span class="cat">Coding · no-code</span></td><td>Cloud workspace where an agent builds & ships whole apps from a prompt.</td><td>~$9B valuation · ~$150M ARR · 50M+ users</td><td>Free / $20 / $100 mo</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://replit.com">replit.com</a></td></tr>
+    <tr><td class="rank">8</td><td><span class="nm">Glean</span> <span class="cat">Enterprise · Search</span></td><td>Enterprise search + agents that act across all your work apps.</td><td>~$7.2B valuation · ~$200M ARR</td><td>Enterprise per-seat + usage</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://glean.com">glean.com</a></td></tr>
+    <tr><td class="rank">9</td><td><span class="nm">Decagon</span> <span class="cat">Enterprise · CX</span></td><td>"Concierge" customer-support agents.</td><td>~$4.5B valuation · ~$35M ARR · 100+ logos</td><td>Enterprise (outcome/usage)</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://decagon.ai">decagon.ai</a></td></tr>
+    <tr><td class="rank">10</td><td><span class="nm">n8n</span> <span class="cat">Automation</span></td><td>Visual workflow automation with native AI agents (400+ integrations).</td><td>~$2.5B valuation · 190k★ on GitHub</td><td>Self-host free / Cloud €24+ mo</td><td><span class="pill open">OPEN*</span></td><td><a href="https://n8n.io">n8n.io</a></td></tr>
+    <tr><td class="rank">11</td><td><span class="nm">Manus</span> <span class="cat">General agent</span></td><td>A "do the whole task" autonomous agent on its own virtual computer.</td><td>Reported acquired by <b>Meta</b> at ~$2B+<span class="fn">¹</span> (Dec 2025) · ~$100M ARR in 8 mo</td><td>Credit-based subscription</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://manus.im">manus.im</a></td></tr>
+    <tr><td class="rank">12</td><td><span class="nm">Factory</span> <span class="cat">Coding</span></td><td>"Droids" — agents that handle the full software lifecycle.</td><td>~$1.5B valuation · used at Nvidia, Adobe</td><td>Free / $20 mo / enterprise</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://factory.ai">factory.ai</a></td></tr>
+    <tr><td class="rank">13</td><td><span class="nm">Genspark</span> <span class="cat">General agent</span></td><td>"Super agent" that builds deliverables and even makes phone calls.</td><td>~$1.25B valuation · $36M ARR in 45 days</td><td>Freemium + credits</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://genspark.ai">genspark.ai</a></td></tr>
+    <tr><td class="rank">14</td><td><span class="nm">LangChain</span> <span class="cat">Framework co.</span></td><td>The most-used toolkit for building agents; sells hosting & monitoring.</td><td>~$1.25B valuation · ~90M monthly downloads</td><td>OSS free / cloud usage-based</td><td><span class="pill open">OPEN</span></td><td><a href="https://langchain.com">langchain.com</a></td></tr>
+    <tr><td class="rank">15</td><td><span class="nm">Augment Code</span> <span class="cat">Coding</span></td><td>Enterprise coding agent with a huge codebase "context engine."</td><td>~$1B valuation · ~$20M ARR<span class="fn">¹</span></td><td>Credit-based + enterprise</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://augmentcode.com">augmentcode.com</a></td></tr>
+    <tr><td class="rank">16</td><td><span class="nm">Gumloop</span> <span class="cat">Automation</span></td><td>No-code builder that turns any employee into an agent-builder.</td><td>$50M Series B (Benchmark) · Shopify, Ramp</td><td>Free / $37 / $244 mo</td><td><span class="pill closed">CLOSED</span></td><td><a href="https://gumloop.com">gumloop.com</a></td></tr>
+  </table>
+  <p class="intro" style="margin-top:7px; font-size:8.4pt;"><b>Also enormous, but baked into trillion-dollar companies</b> (so not separately ranked): <b>OpenAI ChatGPT Agent</b> (absorbed "Operator"), <b>Anthropic Claude</b> (computer use + Claude Code), <b>Google Gemini / Project Mariner</b>, and <b>Microsoft Copilot</b>. These are arguably the most-used agents of all — they just aren't standalone startups. Smaller but notable: <b>Lindy</b> & <b>Relay.app</b> (no-code agents), <b>Cora</b> & <b>Sparkle</b> (Every's consumer apps), <b>Hebbia</b> (finance/legal).</p>
+</div>
+
+<!-- ============ SECTION 2: OSS ============ -->
+<div class="section pagebreak" id="oss">
+  <h2>2 · The open-source toolkits, ranked by traction</h2>
+  <p class="intro">These are mostly free, open-source building blocks that developers use to assemble their own agents. "Stars" are GitHub's bookmark/popularity signal (fetched May 2026) — a good proxy for mindshare, though older projects can carry legacy hype. Most are free to use; the companies behind them sell hosting, monitoring, or enterprise tiers.</p>
+
+  <table>
+    <tr><th style="width:4%">#</th><th style="width:16%">Project</th><th style="width:30%">What it is</th><th style="width:11%">GitHub ★</th><th style="width:21%">How it makes money</th><th style="width:11%">License</th><th style="width:7%">Link</th></tr>
+    <tr><td class="rank">1</td><td><span class="nm">n8n</span></td><td>Visual AI-workflow automation</td><td>~190k</td><td>Cloud tiers / enterprise</td><td>Fair-code</td><td><a href="https://github.com/n8n-io/n8n">repo</a></td></tr>
+    <tr><td class="rank">2</td><td><span class="nm">AutoGPT</span></td><td>The original "autonomous GPT"; now a low-code platform</td><td>~185k</td><td>Cloud platform (beta)</td><td>MIT*</td><td><a href="https://github.com/Significant-Gravitas/AutoGPT">repo</a></td></tr>
+    <tr><td class="rank">3</td><td><span class="nm">Dify</span></td><td>Build & run agentic workflows (visual)</td><td>~143k</td><td>Cloud $59–159 mo</td><td>Apache*</td><td><a href="https://github.com/langgenius/dify">repo</a></td></tr>
+    <tr><td class="rank">4</td><td><span class="nm">LangChain</span></td><td>General agent-building framework</td><td>~138k</td><td>LangSmith / LangGraph cloud</td><td>MIT</td><td><a href="https://github.com/langchain-ai/langchain">repo</a></td></tr>
+    <tr><td class="rank">5</td><td><span class="nm">Claude Code</span> <span class="cat">Anthropic</span></td><td>Terminal coding agent</td><td>~127k</td><td>Via Claude plans / API</td><td>Proprietary</td><td><a href="https://github.com/anthropics/claude-code">repo</a></td></tr>
+    <tr><td class="rank">6</td><td><span class="nm">Gemini CLI</span> <span class="cat">Google</span></td><td>Open terminal AI agent</td><td>~105k</td><td>Free tier / API</td><td>Apache-2.0</td><td><a href="https://github.com/google-gemini/gemini-cli">repo</a></td></tr>
+    <tr><td class="rank">7</td><td><span class="nm">Browser Use</span></td><td>Let agents control a web browser</td><td>~96k</td><td>Cloud API (freemium)</td><td>MIT</td><td><a href="https://github.com/browser-use/browser-use">repo</a></td></tr>
+    <tr><td class="rank">8</td><td><span class="nm">OpenAI Codex</span> <span class="cat">OpenAI</span></td><td>Terminal + cloud coding agent</td><td>~86k</td><td>Via ChatGPT / API</td><td>Apache-2.0</td><td><a href="https://github.com/openai/codex">repo</a></td></tr>
+    <tr><td class="rank">9</td><td><span class="nm">OpenHands</span></td><td>Open autonomous dev-agent platform</td><td>~75k</td><td>Cloud + enterprise</td><td>MIT</td><td><a href="https://github.com/All-Hands-AI/OpenHands">repo</a></td></tr>
+    <tr><td class="rank">10</td><td><span class="nm">MetaGPT</span></td><td>Multi-agent "AI software company"</td><td>~68k</td><td>Atoms / MGX product</td><td>MIT</td><td><a href="https://github.com/geekan/MetaGPT">repo</a></td></tr>
+    <tr><td class="rank">11</td><td><span class="nm">Cline</span></td><td>Autonomous coding agent (VS Code)</td><td>~62k</td><td>Bring-your-own model keys</td><td>Apache-2.0</td><td><a href="https://github.com/cline/cline">repo</a></td></tr>
+    <tr><td class="rank">12</td><td><span class="nm">AutoGen</span> <span class="cat">Microsoft</span></td><td>Multi-agent framework <i>(now maintenance-only)</i></td><td>~58k</td><td>Free (Azure upsell)</td><td>MIT</td><td><a href="https://github.com/microsoft/autogen">repo</a></td></tr>
+    <tr><td class="rank">13</td><td><span class="nm">CrewAI</span></td><td>Orchestrate role-playing agent "crews"</td><td>~52k</td><td>Enterprise tier</td><td>MIT</td><td><a href="https://github.com/crewAIInc/crewAI">repo</a></td></tr>
+    <tr><td class="rank">14</td><td><span class="nm">LlamaIndex</span></td><td>Document/RAG agent framework</td><td>~50k</td><td>LlamaCloud credits</td><td>MIT</td><td><a href="https://github.com/run-llama/llama_index">repo</a></td></tr>
+    <tr><td class="rank">15</td><td><span class="nm">Goose</span> <span class="cat">Block</span></td><td>Local, extensible AI agent (MCP-first)</td><td>~46k</td><td>Free</td><td>Apache-2.0</td><td><a href="https://github.com/block/goose">repo</a></td></tr>
+    <tr><td class="rank">16</td><td><span class="nm">Aider</span></td><td>Terminal AI pair-programmer</td><td>~45k</td><td>Free (your API costs)</td><td>Apache-2.0</td><td><a href="https://github.com/Aider-AI/aider">repo</a></td></tr>
+  </table>
+  <p class="intro" style="margin-top:7px; font-size:8.4pt;">Other strong toolkits: <b>Agno</b> (~40k), <b>LangGraph</b> & <b>Continue</b> (~33k), <b>Composio</b> (~29k, tool-connections), <b>Smolagents</b> (HuggingFace, ~28k), <b>OpenAI Agents SDK</b> (~27k), <b>Vercel AI SDK</b> & <b>Mastra</b> (~24k, TypeScript), <b>Letta</b> (~23k, agent memory), <b>Skyvern</b> (~22k, browser RPA), <b>Google ADK</b> (~20k), <b>E2B</b> (~12k, secure sandboxes). <span style="color:#999">* "Fair-code"/modified licenses aren't fully open-source in the strict sense.</span></p>
+</div>
+
+<!-- ============ SECTION 3: TOP 3 ============ -->
+<div class="section amber pagebreak" id="top3">
+  <h2>3 · Three standouts, up close</h2>
+  <p class="intro">Chosen for variety and significance: the breakout commercial success, the biggest surprise, and the most forward-looking business model.</p>
+
+  <div class="card">
+    <h3>🏆 Cursor — the breakout success <span class="badge b-pm" style="vertical-align:3px">most successful</span></h3>
+    <div class="tagline">Anysphere · AI code editor · closed-source</div>
+    <p>Cursor is an AI-first code editor where an agent reads your whole project, proposes multi-file changes, and runs "background agents" that work while you do something else. It became the <b>fastest software company in history to reach $2B in annual revenue</b>, reportedly going from ~$100M to ~$2B ARR in about a year.</p>
+    <span class="stat"><b>~$29.3B</b> valuation¹</span><span class="stat"><b>~$2B</b> ARR</span><span class="stat">$20–200/mo</span>
+    <div class="why"><b>Why it matters:</b> Cursor is the proof that agentic apps are a real, enormous market — not hype. It also shows the winning consumer playbook: take an everyday workflow (writing code), make the agent feel like a natural extension of it, and charge a simple subscription.</div>
+  </div>
+
+  <div class="card">
+    <h3>🚀 Manus — the surprise <span class="badge b-pm" style="vertical-align:3px">most surprising</span></h3>
+    <div class="tagline">Butterfly Effect / Monica (China) · general autonomous agent · closed-source</div>
+    <p>Manus went viral in March 2025 as a "general agent" that takes a goal, spins up its <b>own virtual computer</b>, and completes the entire multi-step task — research, building files, booking things — then hands you the finished result. It reportedly hit <b>~$100M revenue in about 8 months</b> (among the fastest ever) and was <b>reportedly acquired by Meta in Dec 2025 for $2B+</b>¹.</p>
+    <span class="stat"><b>~$100M</b> ARR in 8mo</span><span class="stat">reported <b>Meta</b> acq. $2B+¹</span><span class="stat">2M+ week-1 waitlist</span>
+    <div class="why"><b>Why it matters:</b> Manus is the clearest bet on the "do the whole job for me" future — and a reminder that a breakout agentic app can now come from anywhere and scale in months. (The Meta deal price is press-reported, not officially confirmed.)</div>
+  </div>
+
+  <div class="card">
+    <h3>🔮 Sierra — the forward-looking model <span class="badge b-pm" style="vertical-align:3px">most forward-looking</span></h3>
+    <div class="tagline">Bret Taylor (ex-Salesforce co-CEO, OpenAI chair) · enterprise customer-experience agents · closed-source</div>
+    <p>Sierra builds customer-service agents that resolve issues end-to-end for big companies. Its standout idea is <b>outcome-based pricing</b>: instead of charging per seat or per message, Sierra largely charges <b>per problem actually resolved</b>. It reached <b>~$150M ARR</b> and a <b>~$15B valuation</b> in under two years, serving 40%+ of the Fortune 50.</p>
+    <span class="stat"><b>~$15B</b> valuation</span><span class="stat"><b>~$150M</b> ARR</span><span class="stat">pay-per-resolution</span>
+    <div class="why"><b>Why it matters:</b> "Pay only when the agent succeeds" may be the pricing model the whole industry moves toward — it aligns cost with value and is only possible because the agent does real work, not just assist. Worth watching for how we'd ever price an Atram agent.</div>
+  </div>
+
+  <p class="intro" style="font-size:8.4pt;"><b>Honorable mentions:</b> <b>Devin</b> (the autonomous-engineer bet), <b>Browser Use</b> (a tiny open-source project at ~96k stars powering computer-use everywhere), and <b>MCP</b> — Anthropic's open "plug" standard that lets any agent connect to any tool (now an industry default).</p>
+</div>
+
+<!-- ============ SECTION 4: COMPARISON ============ -->
+<div class="section" id="compare">
+  <h2>4 · Head-to-head — what each teaches us</h2>
+  <table>
+    <tr><th style="width:18%"></th><th style="width:27%">Cursor</th><th style="width:27%">Manus</th><th style="width:28%">Sierra</th></tr>
+    <tr><td class="nm">Who it's for</td><td>Developers (millions)</td><td>Anyone, any task (consumer + pro)</td><td>Big enterprises (their customers)</td></tr>
+    <tr><td class="nm">What the agent does</td><td>Writes & edits code in your project</td><td>Completes whole tasks on a virtual PC</td><td>Resolves customer-support cases</td></tr>
+    <tr><td class="nm">How you pay</td><td>Flat monthly subscription</td><td>Subscription + usage credits</td><td>Per resolved outcome</td></tr>
+    <tr><td class="nm">Scale</td><td>~$2B ARR · ~$29.3B¹</td><td>~$100M ARR · reported Meta acq.¹</td><td>~$150M ARR · ~$15B</td></tr>
+    <tr><td class="nm">Its big idea</td><td>Make the agent native to a daily workflow</td><td>One agent for <i>everything</i></td><td>Charge for results, not seats</td></tr>
+    <tr><td class="nm">Main risk</td><td>Frontier labs (OpenAI/Anthropic) competing directly</td><td>"Generalist" agents may lose to focused ones; reliability</td><td>Hard to guarantee outcomes; long enterprise sales</td></tr>
+  </table>
+  <p class="intro" style="margin-top:8px;">The through-line: <b>the winners pick a clear job, let the AI do it end-to-end, and price around the value delivered.</b> Cursor proves the market is huge, Manus shows breakout speed is possible from anywhere, and Sierra shows where pricing is heading. Note all three are <b>closed-source products</b> — the open-source world (Section 2) is mostly the <i>picks-and-shovels</i> layer that everyone, including these companies, builds on.</p>
+</div>
+
+<!-- ============ SECTION 5: TAKEAWAYS ============ -->
+<div class="section amber" id="takeaways">
+  <h2>5 · What it means for Atram</h2>
+  <div class="card" style="border-left:4px solid #a14d00;">
+    <p><b>1. The market is proven and fast.</b> Agentic apps went from curiosity to multi-billion-dollar businesses in ~18 months. Speed-to-traction is unusually high — the bar for "interesting" is now "does the whole job," not "assists with it."</p>
+    <p><b>2. Pick a job, own it end-to-end.</b> Every winner is built around one clear outcome (write code / resolve a ticket / do the task). For our own products, the lesson is to define the outcome sharply and let the agent own the full loop — the Every "agent-native" idea, validated at scale.</p>
+    <p><b>3. Watch outcome-based pricing.</b> Sierra's "pay when it works" model is the most forward-looking commercial idea here and likely where client expectations head next.</p>
+    <p><b>4. Build on the open layer.</b> We don't need to reinvent the plumbing — LangChain, the MCP standard, Browser Use, and sandbox runtimes (E2B) are mature, free building blocks. Buy/borrow the picks-and-shovels; spend our effort on the specific outcome we deliver.</p>
+  </div>
+</div>
+
+<div class="footer">
+  <h3>Sources, dates &amp; honesty notes</h3>
+  <p>Compiled 2026-05-26 from company sites, reputable press (TechCrunch, CNBC, Bloomberg, VentureBeat), funding announcements, and GitHub star counts fetched live the same week. <b>Valuations and revenue for private companies are point-in-time and move quickly.</b> Footnote ¹ marks figures that were <b>reported or "in talks" rather than officially confirmed</b> — specifically: Cursor's ~$29.3B (and a rumored ~$50B round), Cognition's ~$10.2B (and rumored ~$25B), Manus's reported Meta acquisition at $2B+, and Augment's ~$20M ARR. GitHub stars are popularity signals, not usage. A companion <b>Technical Edition</b> of this report covers architectures, protocols (MCP/A2A), benchmarks (SWE-bench, OSWorld), and current research.</p>
+  <p>Lives in <code>.github/docs/claude-code/</code>. Questions → Engineering channel.</p>
+</div>
+
+</body>
+</html>
