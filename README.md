@@ -27,3 +27,8 @@ We use a Fibonacci-based point scale to estimate effort on issues:
 | 8 | Full sprint — no other tickets |
 
 Set the **Points** field on the issue's Engineering project item when triaging or picking it up. The legacy `points:*` labels were retired in 2026-04 and should not be re-added — see [`AGENTS.md`](AGENTS.md#label-deletion-gotcha) for context.
+
+## Operational references
+
+- [`docs/supabase.md`](docs/supabase.md) — how the Rada Supabase is wired, how to authenticate, how to apply migrations without a DB password, and the schema gotchas to avoid.
+- [`AGENTS.md`](AGENTS.md) — org-wide notes for AI agents.
